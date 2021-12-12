@@ -3,12 +3,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 class CustLoanList extends Component{
-    
     constructor(props){
         super(props)
+         let loginuser=localStorage.getItem("user");
+
         this.state = {
             loans:[],
-            acc_id: 2
+            acc_id: loginuser.accountNumber
         }
     }
 

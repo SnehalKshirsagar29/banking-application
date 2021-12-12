@@ -14,7 +14,9 @@ import axios from "axios";
 
 export default function LoanApplication() {
     const paperStyle={padding:'50px 20px', width:600,margin:"10px auto"}
-    const[accId,setAccountId]=useState('')
+    let loginuser=localStorage.getItem("user");
+
+    const[accId,setAccountId]=useState(loginuser.accountNumber)
     const[loan_amount,setloanamount]=useState('')
     const[tenure,setTenure]=useState('')
     const[status,setStatus]=useState('NEW')
@@ -131,7 +133,7 @@ const Statuses = [
                             <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                             <TextField required id="account_id" label="Account Id" variant="standard" 
                             value={accId}
-                            onChange={(e)=>setAccountId(e.target.value)}/>
+                            /* onChange={(e)=>setAccountId(e.target.value)} *//>
                         </Box>
                             <p style={{color:"red", fontSize:"12px"}}>{accIdError}</p>
                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
