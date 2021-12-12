@@ -1,52 +1,33 @@
-import React, { Component } from 'react';
-import NotificationApis from './NotificationApis';
+import axios from "axios";
 
-//import './Notificationsummary.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-class NotificationsSummary extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            statements: []
+const ACC_BASE_URL = 'http://localhost:8080/api'; 
 
-        }
-    }
-    componentDidMount() {
-         NotificationApis.getAllNotifications(this.state.accountNumber).then((response) => {
-           this.setState({ statements: response.data });
-           console.log("in didi mount: "+this.state.statements);
-         });
-     
-    }
-    render() {
-        return (
-            <div className="notificationsummary">
-                <h2>Notifications summary</h2>
-                <table className="table table-condensed">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Date</th>
-                            <th>Message</th>
+class NotificationApis {
 
-                        </tr>
-                    </thead>
-                 {   <tbody>
-                        {
-                            this.state.statements.map(
-                                stmt =>
-                                    <tr key={stmt.id}>
-                                        <td>{stmt.customerId} </td>
-                                        <td>{stmt.notification_date} </td>
-                                        <td>{stmt.message} </td>
-                                    </tr>
-                            )
-                        }
-                    </tbody> }
-                </table>
-            </div>
-        );
+    getAllNotifications() {
+        console.log("api.getallnoti");
+        return axios.get(ACC_BASE_URL + '/notifications');
     }
+/* 
+ getAllNotifications(accountNumber) {
+        return axios.get(ACC_BASE_URL + '/' + accountNumber + '/statements');
+    }
+    doTransaction(transaction) {
+        return axios.put( ACC_BASE_URL + '/transaction/' + transaction.accountNumber, transaction);
+    }
+
+    // debitAmount(transaction) {
+    //     return axios.put(ACC_BASE_URL + '/transaction/' + transaction.accountNumber, transaction);
+    // }
+
+    getBalance(accountNumber) {
+        return axios.get(ACC_BASE_URL + '/balance/' + accountNumber);
+    }
+
+    getAccountById(accountNumber) {
+        return axios.get(ACC_BASE_URL+'/'+accountNumber);
+    } */
+
 }
 
-export default  NotificationsSummary;
+export default new NotificationApis();
