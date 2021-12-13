@@ -5,9 +5,10 @@ import paginate from 'paginate-array';
 class TransactionSummary extends Component {
   constructor(props) {
     super(props)
+    let loggedInUser = JSON.parse(localStorage.getItem('user'));
     this.state = {
       statements: [],
-      accountNumber: 67058111240,
+      accountNumber: loggedInUser.accountNumber,
       startDate: '',
       endDate: '',
       size: 10,

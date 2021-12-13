@@ -23,7 +23,7 @@ const LoginForm = () => {
         axios.get('http://localhost:2222/api/login', {
             params: {
               'username': username,
-              'passwd': passwd
+              'password': passwd
             }
         }).then( response => {
             console.log("response.data : "+JSON.stringify(response.data));
@@ -34,26 +34,40 @@ const LoginForm = () => {
                     <App  />,
                     document.getElementById('root')
                );
-                //window.location = "/home";
-                 const loggedInUser = localStorage.getItem("user");
-                // var newData = loggedInUser.data.userList;
-                //const foundUser = JSON.parse(loggedInUser);
-            //    setUser(loggedInUser);
-                    // loggedInUser.map(obj => {
-                    //     console.log("inside map "+JSON.stringify(obj));
-                    //     console.log(obj.username);
-                    // }
-                    // );
-
-
-                 console.log("submitForm : loggedInUser111 : "+loggedInUser);
-                // console.log("user : "+JSON.parse(user));
-                // console.log("loggedInUser222 : "+user.username);
             }
         });
-        // const newentry = { username: username, passwd: passwd }
-        // setallEntry([...allentry, newentry])
     }
+
+    const register = () => {
+        console.log("Inside register...");
+        //window.location.assign('/register');
+        ReactDOM.render(
+            <App isRegister={true}/>,
+            document.getElementById('root')
+       );
+        //  <Link to={location => ({ ...location, pathname: "/regiser" })} />
+         //<NavLink className="navbar-item" activeClassName="is-active" to="/register" />
+        //       <CreateAccRegistrationForm  />
+         {/* </NavLink> */}
+
+        // <NavLink exact path="/register" element={<CreateAccRegistrationForm />} />
+        // <BrowserRouter>
+        //     <Routes>
+        //     <Route exact path="/register" element={<CreateAccRegistrationForm />} />
+        //     </Routes>
+        // </BrowserRouter>
+
+    //     ReactDOM.render(
+    //         <CreateAccRegistrationForm  />,
+    //         document.getElementById('root')
+    //    );
+    }
+
+    const handelCancel = () => {
+        setuserName("");
+        setpassWord("");
+    }
+
 
     return (
         <Container>
@@ -87,9 +101,12 @@ const LoginForm = () => {
                 <tr>
                     <td>
                     <Button variant="contained" padding ="right :50px"color="success" padding="50, 20" type="submit" onClick={submitForm}>Submit</Button>
-                    </td> &nbsp; &nbsp;
+                    </td>&nbsp; &nbsp;
                     <td>
-                    <Button variant="contained"  padding="50, 20" >Cancel</Button>
+                    <Button variant="contained" padding="50, 20" onClick={handelCancel}>Reset</Button>
+                    </td>
+                    <td>
+                    <Button  color="success" onClick = {register} to={`/register`} block>Create Account</Button>
                     </td>
                 </tr>
             </table>

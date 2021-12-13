@@ -17,12 +17,13 @@ import LoanList from './components/Loan/LoanList';
 import LoanEdit from './components/Loan/LoanEdit';
 import ViewLoan from './components/Loan/ViewLoan';
 import Logout from './components/home/Logout';
+import CreateAccRegistrationForm from './components/login/CreateAccRegistrationForm';
 
 
 function App(props) {
+   let isRegister = props.isRegister;
    let loggedInUser = JSON.parse(localStorage.getItem('user'));
    console.log("loggedInUser :::::: "+loggedInUser);
-
      if (loggedInUser != null && Object.keys(loggedInUser).length > 0) {
        console.log('Inside If condition : =========>');
        return (
@@ -51,7 +52,7 @@ function App(props) {
 
           {/* Logout */}
            <Route exact path="/login" element={<Logout />} />
-
+           <Route exact path="/register" element={<CreateAccRegistrationForm />} />
            {/* Loans service */}
            <Route exact path="/loans/apply" element={<LoanApplication />} />
            <Route exact path="/loans/details" element={<CustLoanList />} />
@@ -62,9 +63,13 @@ function App(props) {
          </Routes>
        </BrowserRouter>
        );
-     } else if(loggedInUser === null || Object.keys(loggedInUser).length === 0){
-       	return <LoginForm />;
-     }
+     } else if(isRegister) {
+      console.log("window.location register : "+window.location);
+         return <CreateAccRegistrationForm />;
+     }  else if(loggedInUser === null || Object.keys(loggedInUser).length === 0){
+         console.log("window.location login: "+window.location);
+         return <LoginForm />;
+      }
 }
 
 export default App;

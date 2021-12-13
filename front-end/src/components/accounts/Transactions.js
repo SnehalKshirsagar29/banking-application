@@ -9,8 +9,9 @@ toast.configure();
 class Transactions extends Component {
     constructor(props) {
         super(props);
+        let loggedInUser = JSON.parse(localStorage.getItem('user'));
         this.state = {
-            accountNumber: 67058111240,
+            accountNumber: loggedInUser.accountNumber,
             transactionType: '',
             amount: '',
             comment: '',

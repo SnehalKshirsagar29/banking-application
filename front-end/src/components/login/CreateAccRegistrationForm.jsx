@@ -3,28 +3,30 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
-import login from '../images/login.jpg';
+import login from '../../images/login.png';
 import { Container } from "react-bootstrap";
 import { MenuItem, Paper, Select } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {AccountBalanceWalletRounded, AppRegistrationOutlined, CodeOffRounded, MailOutline, MarkEmailReadRounded, MobiledataOffOutlined, MoneyOffCsredRounded, Password, PasswordOutlined, PasswordRounded, PauseCircleOutlineRounded, PlayCircleFilledOutlined, PlayCircleFilledRounded, SupervisedUserCircleOutlined } from "@mui/icons-material";
+import AccountApis from "../accounts/AccountApis";
+import { toast } from 'react-toastify';
+import ReactDOM from 'react-dom';
+import App from "../../App";
+
 const CreateAccRegistrationForm = () => {
     const paperStyle = { padding: '50px 20px', width: 800, margin: "10px auto" }
 
     const [userRegistration, setUserRegistration] = useState({
         firstName: "",
-        lastname: "",
-        branch: "",
-        ifsc: "",
-        acctype: "",
+        lastName: "",
+        branchName: "",
+        ifscCode: "",
+        accountType: "",
         email: "",
-        mobile: "",
-        newPassword:"",
-        retypePassword:"",
-
-
-
+        mobileNumber: "",
+        password:"",
+        retypePassword:""
     });
     //already existing records
     const [record, setRecords] = useState([]);
@@ -40,25 +42,48 @@ const CreateAccRegistrationForm = () => {
     const handelSubmit = (e) => {
         e.preventDefault();
         const newrecord = { ...userRegistration, id: new Date().getTime().toString() }
+        console.log("newrecord : "+JSON.stringify(newrecord));
+        AccountApis.createAccount(newrecord)
+        .then(res => {
+            console.log("Toast : Account created successfully!");
+            toast.success('Account created successfully!', {
+                position: "top-right",
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                autoClose:2600
+            });
+
+            ReactDOM.render(
+                <App />,
+                document.getElementById('root')
+           );
+        }).catch((error) => {
+            console.log('Account creation failed! due to ' + JSON.stringify(error.response));
+            toast.error('Account creation failed! due to ' + error.response.data.msg, {
+                position: "top-right",
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                autoClose:4000
+            });
+        });
         console.log(record);
         setRecords([...record, newrecord]);
         console.log(record);
         setUserRegistration({
             firstName: "",
-            lastname: "",
-            branch: "",
-            ifsc: "",
-            acctype: "",
+            lastName: "",
+            branchName: "",
+            ifscCode: "",
+            accountType: "",
             email: "",
-            mobile: "",
-            newPassword:"",
+            mobileNumber: "",
+            password:"",
             retypePassword:"",
         
         })
     }
-
-
-
 
     return (
         <Container>
@@ -83,8 +108,8 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <AccountCircleIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="LastName"
-                                                    name="lastname" id="lastname" type="text"
-                                                    value={userRegistration.lastname}
+                                                    name="lastName" id="lastName" type="text"
+                                                    value={userRegistration.lastName}
                                                     onChange={handelInput}
                                                 />
                                             </Box>
@@ -95,22 +120,22 @@ const CreateAccRegistrationForm = () => {
                                                     <InputLabel id="demo-simple-select-label">Branch Name</InputLabel>
                                                     <Select
                                                         labelId="demo-simple-select-label"  required id="outlined-required"
-                                                        name="branch" id="branch"
-                                                        value={userRegistration.branch}
+                                                        name="branchName" id="branchName"
+                                                        value={userRegistration.branchName}
                                                         label="Branch Name"
                                                         onChange={handelInput}
                                                     >
-                                                        <MenuItem value={10}>Pune</MenuItem>
-                                                        <MenuItem value={20}>Banglore</MenuItem>
-                                                        <MenuItem value={30}>Mumbai</MenuItem>
+                                                        <MenuItem value="Pune">Pune</MenuItem>
+                                                        <MenuItem value="Banglore">Banglore</MenuItem>
+                                                        <MenuItem value="Mumbai">Mumbai</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             </Box>
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <CodeOffRounded sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="IFSC Code"
-                                                    name="ifsc" id="ifsc" type="text"
-                                                    value={userRegistration.ifsc}
+                                                    name="ifscCode" id="ifscCode" type="text"
+                                                    value={userRegistration.ifscCode}
                                                     onChange={handelInput}
                                                 />
                                             </Box>
@@ -120,13 +145,13 @@ const CreateAccRegistrationForm = () => {
                                                     <InputLabel id="demo-simple-select-label">Account Type</InputLabel>
                                                     <Select
                                                         labelId="demo-simple-select-label"  required id="outlined-required"
-                                                        name="acctype" id="acctype"
-                                                        value={userRegistration.acctype}
+                                                        name="accountType" id="accountType"
+                                                        value={userRegistration.accountType}
                                                         label="Account Type"
                                                         onChange={handelInput}
                                                     >
-                                                        <MenuItem value={1}>Saving</MenuItem>
-                                                        <MenuItem value={2}>Current</MenuItem>  
+                                                        <MenuItem value="Saving">Saving</MenuItem>
+                                                        <MenuItem value="Current">Current</MenuItem>  
                                                     </Select>
                                                 </FormControl>
                                             </Box>
@@ -141,16 +166,16 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <MobiledataOffOutlined sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="Mobile"
-                                                    name="mobile" id="mobile" type="text"
-                                                    value={userRegistration.mobile}
+                                                    name="mobileNumber" id="mobileNumber" type="text"
+                                                    value={userRegistration.mobileNumber}
                                                     onChange={handelInput}
                                                 />
                                             </Box>
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <PasswordOutlined sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="New Password"
-                                                    name="newPassword" id="newPassword" type="password"
-                                                    value={userRegistration.newPassword}
+                                                    name="password" id="password" type="password"
+                                                    value={userRegistration.password}
                                                     onChange={handelInput}
                                                 />
                                             </Box>
@@ -183,29 +208,6 @@ const CreateAccRegistrationForm = () => {
                             </tr>
                         </table>
                     </form>
-                </div>
-                <div>
-                    {
-                        record.map((currelem)=>{
-                            return(
-                                <div>
-                                       <p>{currelem.firstName} </p>
-                                       <p>{currelem.lastname} </p>
-                                       <p>{currelem.bankname} </p>
-                                       <p>{currelem.branch} </p>
-                                       <p>{currelem.acctype} </p>
-                                       <p>{currelem.ifsc} </p>
-                                       <p>{currelem.mobile} </p>
-                                       <p>{currelem.email} </p>
-
-                                       
-                                       
-                                    </div>
-                            )
-                        }
-
-                        )
-                    }
                 </div>
 
             </Paper>

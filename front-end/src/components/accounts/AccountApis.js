@@ -11,6 +11,10 @@ class AccountApis {
         return axios.put( ACC_BASE_URL + '/transaction/' + transaction.accountNumber, transaction);
     }
 
+    createAccount(account) {
+        return axios.post( ACC_BASE_URL + 's', account);
+    }
+
     getBalance(accountNumber) {
         return axios.get(ACC_BASE_URL + '/balance/' + accountNumber);
     }
