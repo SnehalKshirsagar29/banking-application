@@ -60,4 +60,7 @@ public class Account {
     
     @Column(name="score")
     private long score;
+    
+    @Column(name="password")
+    private long password;
 }

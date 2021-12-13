@@ -6,4 +6,6 @@ import com.account.service.entity.Account;
 
 public interface AccountServiceRepository extends JpaRepository<Account, Long> {
 
+	Account getByEmail(String username);
+
 }

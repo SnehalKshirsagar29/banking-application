@@ -25,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.account.service.entity.Account;
 import com.account.service.entity.Transaction;
+import com.account.service.exceptions.AccountNotFoundException;
 import com.account.service.services.AccountService;
 import com.account.service.services.TransactionService;
 import com.account.service.utils.AccountHelper;
@@ -45,6 +46,10 @@ public class AccountController {
 		if(account != null) {
 			account.setAccountNumber(AccountHelper.generateAccountNum());
 			account.setDate(LocalDate.now());
+			account.setBankName("SBM");
+			account.setBalance(0.0);
+		} else {
+			System.err.println("Invalid request!");
 		}
 		Account acc = service.addAccount(account);
 		URI location = ServletUriComponentsBuilder
@@ -62,19 +67,33 @@ public class AccountController {
 	
 
 	@GetMapping(path = "/login")
-	public ResponseEntity<Object> checkLogin(@RequestParam String username, @RequestParam Long passwd) {
-		System.out.println("username : "+username+" : passwd : "+passwd);
-		Map<String, String> map = new HashMap<>();
-		if(username.equalsIgnoreCase("ganesh") && passwd == 123) {
-			map.put("username", username);
-			map.put("passwd", passwd.toString());
-			map.put("accountNumber", "111103");
-			map.put("msg", "Success");
-			return ResponseEntity.ok(map);
-		} else {
-			map.put("msg", "Fail");
-			return ResponseEntity.ok(map);
+	public ResponseEntity<Object> checkLogin(@RequestParam String username, @RequestParam Long password) {
+		System.out.println("username : "+username+" : passwd : "+password);
+		if(username != null && !username.isEmpty()) {
+//			Map<String, Object> map1 = new HashMap<>();
+//			map1.put("username", "ganesh");
+//			map1.put("password", "123");
+//			map1.put("msg", "Success");
+//			return ResponseEntity.ok(map1);
+			Account account = this.service.getAccountByEmail(username);
+			System.out.println("account :::: "+account);
+			if(account != null) {
+				if(account.getPassword() == password) {
+					Map<String, Object> map = new HashMap<>();
+					map.put("username", account.getEmail());
+					map.put("accountNumber", account.getAccountNumber());
+					map.put("firstName", account.getFirstName());
+					map.put("lastName", account.getLastName());
+					map.put("msg", "Success");
+					return ResponseEntity.ok(map);
+				} else {
+					throw new AccountNotFoundException("Invalid credentials! ");
+				}
+			} else {
+				throw new AccountNotFoundException("Account not found! Please create account first.");
+			}
 		}
+		return ResponseEntity.ok(new HashMap<String, Object>());
 	}
 
 	@GetMapping(path = "/account/{accountNumber}/statements/sort")
@@ -113,26 +132,17 @@ public class AccountController {
 	@PutMapping(path = "/account/transaction/{accountNumber}")
 	public ResponseEntity<Transaction> doTransaction( @PathVariable Long accountNumber,
 			@RequestBody Transaction transaction) {
-		//return this.service.doTransaction(accountNumber,transaction);
-		ResponseEntity<Transaction> response = this.service.doTransaction(accountNumber,transaction);
-		Map<String, String> map = new HashMap<>();
-			map.put("customerId", "123456");
-			map.put("date", "Jadhav");
-			
-			map.put("message", "Hi form Account Service...");
-		this.transaction.produceRequest("booking", map);
-		return response;
+		return this.service.doTransaction(accountNumber,transaction);
 	}
 	
 	@GetMapping(path = "/account/score/{id}")
-	public Map<String, Object> getAccountBalanceAndScore(@PathVariable Long id) {
+	public ResponseEntity<Object> getAccountBalanceAndScore(@PathVariable Long id) {
 		Optional<Account> account = this.service.getAccountById(id);
-		Map<String, Object> map = null;
+		Map<String, Object> map = new HashMap<>();
 		if(account.isPresent()) {
-			map = new HashMap<>();
 			map.put("balance", account.get().getBalance());
 			map.put("score", account.get().getScore());
 		}
-		return map;
+		return ResponseEntity.ok(map);
 	}
 }

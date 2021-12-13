@@ -1,7 +1,9 @@
 package com.account.service.services;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ public class AccountService {
 
 	private AccountServiceRepository repo;
 	private TransactionServiceRepository transaction;
+	
+	private TransactionService transactionService;
 	
 	public Account addAccount(Account account) {
 		return this.repo.save(account);
@@ -63,6 +67,14 @@ public class AccountService {
 					transaction.setTransactionDate(LocalDate.now());
 					response = this.transaction.save(transaction);
 				}
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("customerId", "123456");
+				map.put("notification_date", LocalDate.now());
+				map.put("message", "Transaction done successfully!");
+				map.put("email_address", account.getEmail());
+				map.put("phone", account.getMobileNumber());
+				this.transactionService.produceRequest("topic-notification", map);
 			} else {
 				throw new AccountNotFoundException("Account not found! : "+accountNumber);
 			}
@@ -70,5 +82,9 @@ public class AccountService {
 			throw new AccountNotFoundException("Invalid data found!");
 		}
 		return ResponseEntity.ok(response);
+	}
+
+	public Account getAccountByEmail(String username) {
+		return this.repo.getByEmail(username);
 	}
 }
