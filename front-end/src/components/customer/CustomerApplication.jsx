@@ -6,16 +6,19 @@ import registration from '../../images/Registration.png';
 import Button from '@mui/material/Button'
 import { MarkEmailUnreadOutlined, MessageOutlined, PhoneAndroid, QueryStatsOutlined } from '@mui/icons-material';
 import axios from 'axios';
-
+import { injectStyle } from "react-toastify/dist/inject-style";
+import { ToastContainer, toast } from "react-toastify";
+if (typeof window !== "undefined") {
+    injectStyle();
+}
 export default function CustomerApplication() {
     const paperStyle = { padding: '50px 20px', width: 600, margin: "10px auto" }
-    let loginuser= JSON.parse(localStorage.getItem("user"));
+    let loginuser = JSON.parse(localStorage.getItem("user"));
     const [id, setCustomerId] = useState(loginuser.accountNumber)
     const [emailAddress, setemailAdress] = useState('')
     const [message, setMessage] = useState('')
     const [phone, setPhone] = useState('')
     const [status, setStatus] = useState('')
-
     const handelCancel = () => {
         setCustomerId("");
         setemailAdress("");
@@ -23,48 +26,40 @@ export default function CustomerApplication() {
         setStatus("");
         setMessage("");
     }
-
     const handleClick = (e) => {
         e.preventDefault()
-        // setTickIdError("");
         setMessageError("");
         setEmailError("");
         setPhoneError("");
         setStatusError("");
-        const CustomerApplication = { id, emailAddress, message, phone, status }
-        console.log(CustomerApplication.id);
+        const CustomerApplication = { id, emailAddress, message, phone, status };
         if (valid()) {
             return axios.post('http://localhost:4040/api/ticket/customer/' + CustomerApplication.id, CustomerApplication)
-                .then((response) => {
-
-                    // this.setState({ statements: [] });
-                    console.log("New loan Application added" + response.data)
-                    // this.setState({ statements: response.data });
-                    // setCustomerId("");
+                .then(response => {
+                    toast.dark("Your ticket is Generated 👋, for this customer Id:" + CustomerApplication.id);
+                    setCustomerId("");
                     setemailAdress("");
-                    setMessage("");
                     setPhone("");
                     setStatus("");
-                    setCustomerId("");
-
+                    setMessage("");
                 }).catch((error) => {
-                    console.log("error loan Application added" + error.response.status)
-                });
+                    toast.dark("Hello 👋, your ticket is not generated sucessfully!" + error.response.status);
+                    setCustomerId("");
+                    setemailAdress("");
+                    setPhone("");
+                    setStatus("");
+                    setMessage("");
+                }
+            );
         }
     }
-    // const [ticketIdError, setTickIdError] = useState('')
-    const [emailError, setEmailError] = useState('')
-    const [messageError, setMessageError] = useState('')
-    const [phoneError, setPhoneError] = useState('')
-    const [statusError, setStatusError] = useState('')
-
-
+    const [emailError, setEmailError] = useState('');
+    const [messageError, setMessageError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+    const [statusError, setStatusError] = useState('');
 
     const valid = () => {
         console.log("in validation");
-        // if (id == "") {
-        //     setTickIdError("Please Enter Customer Id");
-        // }
         if (emailAddress == "") {
             setEmailError("Please Enter EmailAddress");
         }
@@ -152,6 +147,7 @@ export default function CustomerApplication() {
                         </tr>
                     </table>
                 </div>
+                <ToastContainer />
             </Paper>
         </Container>
     );
