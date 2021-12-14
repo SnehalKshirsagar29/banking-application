@@ -4,29 +4,21 @@ const ACC_BASE_URL = 'http://localhost:8080/api';
 
 class NotificationApis {
 
+    // get customer wise notifications
+    getNotificationsByCustomerId(customerId) {
+        return axios.get(ACC_BASE_URL + '/' + 'notifications' + '/customer'+'/'+customerId);
+    }
+
+    // get all notifications present in database
     getAllNotifications() {
-        console.log("api.getallnoti");
         return axios.get(ACC_BASE_URL + '/notifications');
     }
-/* 
- getAllNotifications(accountNumber) {
-        return axios.get(ACC_BASE_URL + '/' + accountNumber + '/statements');
+ 
+    //get customerwise specific notificatuion
+    //  /customer/{customerid}/notification/{id}
+    getNotificationByCustomerIdAndNotificationId(customerId,notificationId) {
+        return axios.get(ACC_BASE_URL +  '/customer'+'/'+customerId+  '/' + 'notification'+  '/' +notificationId);
     }
-    doTransaction(transaction) {
-        return axios.put( ACC_BASE_URL + '/transaction/' + transaction.accountNumber, transaction);
-    }
-
-    // debitAmount(transaction) {
-    //     return axios.put(ACC_BASE_URL + '/transaction/' + transaction.accountNumber, transaction);
-    // }
-
-    getBalance(accountNumber) {
-        return axios.get(ACC_BASE_URL + '/balance/' + accountNumber);
-    }
-
-    getAccountById(accountNumber) {
-        return axios.get(ACC_BASE_URL+'/'+accountNumber);
-    } */
 
 }
 
