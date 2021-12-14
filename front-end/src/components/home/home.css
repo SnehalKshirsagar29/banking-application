@@ -1,0 +1,116 @@
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 50%; /* Full width */
+    height: 50%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(85, 184, 55); /* Fallback color */
+    background-color: rgba(97, 18, 77, 0.4); /* Black w/ opacity */
+  }
+
+
+.modal-content {
+    position: absolute;
+    background-color: #f1d1d1;
+    margin: auto;
+    padding: 0;
+    border: 10px solid hsl(332, 85%, 26%);
+    width: 50%;
+  }
+
+
+  
+.modal-header {
+    padding: 2px 10px;
+    background-color: hsl(327, 61%, 86%);
+  
+  }
+  
+  .modal-body {
+   
+   font-size: 20px;
+    background-color: hsl(326, 50%, 95%);
+  }
+  
+  .modal-footer {
+    padding: 2px 16px;
+    background-color: #df5c05;
+    color: rgb(16, 192, 16);
+  }
+
+
+
+
+  .wpanel_marquee {
+    box-sizing: border-box;
+    color: #f35b40;
+    margin: 50px 0 0;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 40px;
+    
+}
+
+
+.message {
+  background: rgb(255, 189, 131);
+  color: rgb(116, 54, 0);
+  padding: 1px;
+  display: block;
+  margin: 10px 0px;
+  font-size: 20px;
+}
+
+.footer {
+  background: #035297;
+  color: hsl(0, 0%, 100%);
+  font-weight: normal;
+  padding: 8px;
+  display: block;
+  margin: 1px 0px; 
+  font-size: 1rem;
+}
+
+.footnote
+{
+  color: hsl(7, 79%, 55%);
+  font-size: smaller;
+  font-style: italic;
+  font-size: 15px;
+}
+
+.header-welcome
+{
+  color:hsl(204, 100%, 50%)
+ 
+}
+
+.table-class
+{
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 10px;
+ 
+  margin-top:  8px;
+}
+
+.td-container {
+  width: 50%;
+  height: 100%;
+  overflow:hidden;
+  height: 20px;
+  border-spacing: 0px;
+  margin-top:  8px;
+}
+
+
+.th-container {
+  height: 7px;
+}
