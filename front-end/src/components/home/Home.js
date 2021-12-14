@@ -1,11 +1,8 @@
-import { FaTable } from 'react-icons/fa';
 import logo from '../../images/sbm.png';
 import "./home.css";
-import * as IoIcons from 'react-icons/io';
 import * as MdIcons from 'react-icons/md';
 import * as AiIcons from 'react-icons/ai';
 import * as FcIcons from 'react-icons/fc';
-
 
 const Home = () => {
     return (
@@ -54,15 +51,7 @@ const Home = () => {
                 </div>
                 <div> <footer className ="footer"> <AiIcons.AiOutlineCopyright/> &nbsp; State Bank of Mysore</footer></div>
             </div>
-         
-           
-
-          
-        
-           
         </div>
-        
-       
     );
 }
 export default Home;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import NotificationApis from './NotificationApis';
 
-//import './Notificationsummary.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 class NotificationsSummary extends Component {
     constructor(props) {
@@ -9,8 +8,7 @@ class NotificationsSummary extends Component {
         let loggedInUser = JSON.parse(localStorage.getItem('user'));
         this.state = {
             statements: [],
-           // customerId:loggedInUser.accountNumber
-           customerId:111
+            customerId:loggedInUser.accountNumber
 
         }
     }
@@ -22,8 +20,8 @@ class NotificationsSummary extends Component {
     }
     render() {
         return (
-            <div className="notificationsummary">
-                <h2>Notifications summary</h2>
+            <div className="notification_summary">
+                <h2>Notifications Summary :</h2>
                 <table className="table table-condensed">
                     <thead>
                         <tr>

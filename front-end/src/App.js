@@ -9,7 +9,6 @@ import Sidebar from './components/home/Sidebar';
 import Transactions from './components/accounts/Transactions';
 import CustomerApplication from './components/customer/CustomerApplication';
 import CustomerDetails from './components/customer/CustomerDetails';
-import TicketDetails from './components/customer/TicketDetails';
 import LoginForm from './components/login/LoginForm';
 import LoanApplication from './components/Loan/LoanApplication';
 import CustLoanList from './components/Loan/CustLoanList';
@@ -18,6 +17,8 @@ import LoanEdit from './components/Loan/LoanEdit';
 import ViewLoan from './components/Loan/ViewLoan';
 import Logout from './components/home/Logout';
 import CreateAccRegistrationForm from './components/login/CreateAccRegistrationForm';
+import NotificationsSummary from './components/notifications/NotificationSummary';
+import CustomerTicketDetails from './components/customer/CustomerTicketDetails';
 
 
 function App(props) {
@@ -48,7 +49,7 @@ function App(props) {
            {/* Customer service */}
            <Route exact path="/customer/ticket" element={<CustomerApplication />} />
            <Route exact path="/customer/details" element={<CustomerDetails />} />
-           <Route exact path="/customer/ticketdetails" element={<TicketDetails />} />
+           <Route exact path="/customer/ticketdetails" element={<CustomerTicketDetails />} />
 
           {/* Logout */}
            <Route exact path="/login" element={<Logout />} />
@@ -59,6 +60,9 @@ function App(props) {
            <Route exact path="/loans/applications" element={<LoanList />} />
            <Route exact path="/loans/edit/:id" element={<LoanEdit />} />
            <Route exact path="/loans/viewloan/:id" element={<ViewLoan />} />
+
+           {/* Notifications */}
+           <Route exact path="/notifications" element={<NotificationsSummary />} />
 
          </Routes>
        </BrowserRouter>

@@ -49,7 +49,7 @@ render() {
                                         <td>{loan.tenure_balance} </td>
                                         <td>{loan.status} </td>
                                         <td><Link
-                                            class="btn btn-outline-primary mr-2" to={`/edit/${loan.id}`}>
+                                            class="btn btn-outline-primary mr-2" to={`/loans/edit/${loan.id}`}>
                                             Edit
                                          </Link>
                                         </td>

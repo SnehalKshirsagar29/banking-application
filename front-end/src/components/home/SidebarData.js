@@ -84,7 +84,7 @@ export const SidebarData = [
 },
 {
     title: 'Notifications',
-    path: '/home',
-    icon: <FaIcons.FaCartPlus />
+    path: '/notifications',
+    icon: <IoIcons.IoIosNotifications />
 }
 ]

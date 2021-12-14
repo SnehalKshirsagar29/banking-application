@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ACC_BASE_URL = 'http://localhost:2222/api/account';
+const ACC_BASE_URL = 'http://localhost:2222/api/account'; //http://sypulfkjbfg3.synechron.com:2222/api/account
 class AccountApis {
 
     getAllTransactions(accountNumber) {

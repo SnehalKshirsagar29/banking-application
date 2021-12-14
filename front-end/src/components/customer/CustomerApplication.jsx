@@ -14,16 +14,16 @@ if (typeof window !== "undefined") {
 export default function CustomerApplication() {
     const paperStyle = { padding: '50px 20px', width: 600, margin: "10px auto" }
     let loginuser = JSON.parse(localStorage.getItem("user"));
-    const [id, setCustomerId] = useState(loginuser.accountNumber)
+    const [customerId, setCustomerId] = useState(loginuser.accountNumber)
     const [emailAddress, setemailAdress] = useState('')
     const [message, setMessage] = useState('')
     const [phone, setPhone] = useState('')
-    const [status, setStatus] = useState('')
+    const [status, setStatus] = useState('NEW')
     const handelCancel = () => {
-        setCustomerId("");
+        // setCustomerId("");
         setemailAdress("");
         setPhone("");
-        setStatus("");
+        // setStatus("");
         setMessage("");
     }
     const handleClick = (e) => {
@@ -32,22 +32,22 @@ export default function CustomerApplication() {
         setEmailError("");
         setPhoneError("");
         setStatusError("");
-        const CustomerApplication = { id, emailAddress, message, phone, status };
+        const CustomerApplication = {customerId, emailAddress, message, phone, status };
         if (valid()) {
-            return axios.post('http://localhost:4040/api/ticket/customer/' + CustomerApplication.id, CustomerApplication)
+            return axios.post('http://localhost:4040/api/ticket/customer/' + CustomerApplication.customerId, CustomerApplication)
                 .then(response => {
-                    toast.dark("Your ticket is Generated 👋, for this customer Id:" + CustomerApplication.id);
-                    setCustomerId("");
+                    toast.dark("Your ticket is Generated 👋, for Customer Id:" + CustomerApplication.customerId);
+                    // setCustomerId("");
                     setemailAdress("");
                     setPhone("");
-                    setStatus("");
+                    // setStatus("");
                     setMessage("");
                 }).catch((error) => {
                     toast.dark("Hello 👋, your ticket is not generated sucessfully!" + error.response.status);
                     setCustomerId("");
                     setemailAdress("");
                     setPhone("");
-                    setStatus("");
+                    // setStatus("");
                     setMessage("");
                 }
             );
@@ -60,17 +60,14 @@ export default function CustomerApplication() {
 
     const valid = () => {
         console.log("in validation");
-        if (emailAddress == "") {
+        if (emailAddress === "") {
             setEmailError("Please Enter EmailAddress");
         }
-        else if (message == "") {
+        else if (message === "") {
             setMessageError("Please Enter Message");
         }
-        else if (phone == "") {
+        else if (phone === "") {
             setPhoneError("Please Enter Phone");
-        }
-        else if (status == "") {
-            setStatusError("Please Enter Status");
         }
         else {
             return true;
@@ -120,9 +117,10 @@ export default function CustomerApplication() {
                                                 <QueryStatsOutlined sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField id="status" label="Status" variant="standard"
                                                     value={status}
-                                                    onChange={(e) => setStatus(e.target.value)} />
+                                                    // onChange={(e) => setStatus(e.target.value)}
+                                                     />
                                             </Box>
-                                            <p style={{ color: "red", fontSize: "12px" }}>{statusError}</p>
+                                           
                                         </Box>
                                     </div>
                                 </td>

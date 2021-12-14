@@ -30,13 +30,14 @@ class CustomerDetails extends Component{
 render() {
     return(
         
-         <div className="Customer-summary">
+         <div className="customer-summary">
               <ToastContainer />
                 <h2>Customer Details</h2>
                 <table class="table border shadow">
                     <thead class="table-dark">
                         <tr>
                             <th>CustomerId</th>
+                            <th>TicketId</th>
                             <th>EmailAddress</th>
                             <th>Message</th>
                             <th>Phone</th>
@@ -48,6 +49,7 @@ render() {
                             this.state.customers.map(
                                 customer =>
                                     <tr key={customer.id}>
+                                         <td>{customer.customerId}</td>
                                          <td>{customer.id}</td>
                                         <td>{customer.emailAddress}</td>
                                         <td>{customer.message} </td>

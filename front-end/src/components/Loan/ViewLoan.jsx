@@ -34,15 +34,15 @@ const ViewLoan = () => {
         <div className="container py-4">
             <Container>
                 <Paper elevation={3} style={paperStyle}>
-                    <Link className="btn btn-primary" to="/custloanlistview">
-                        back to Home
+                    <Link className="btn btn-primary" to="/loans/details">
+                        back
                     </Link>
                     {/*  <h1 className="display-4">User Id: {id}</h1> */}
                     <hr />
                     <center>
                     <ul className="list-group w-50" >
                         <li className="list-group-item">Account Number: {loan.accId}</li>
-                        <li className="list-group-item">Loan ID: {loan.id}</li>
+                        <li className="list-group-item">Loan ID: {id}</li>
                         <li className="list-group-item">Loan Amount: {loan.loan_amount}</li>
                         <li className="list-group-item">Balance Amount: {loan.loan_balance}</li>
                         <li className="list-group-item">Tenure: {loan.tenure}</li>

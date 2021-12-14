@@ -10,13 +10,14 @@ import { Container ,Paper} from '@material-ui/core';
 import registration from '../../images/LoanApp.png';
 import Button from '@mui/material/Button';
 // import { useHistory} from "react-router-dom";
-import axios from "axios";
+import { toast } from 'react-toastify';
+toast.configure();
 
 export default function LoanApplication() {
     const paperStyle={padding:'50px 20px', width:600,margin:"10px auto"}
-    let loginuser=localStorage.getItem("user");
+    let loggedInUser = JSON.parse(localStorage.getItem('user'));
 
-    const[accId,setAccountId]=useState(loginuser.accountNumber)
+    const[accId,setAccountId]=useState(loggedInUser.accountNumber)
     const[loan_amount,setloanamount]=useState('')
     const[tenure,setTenure]=useState('')
     const[status,setStatus]=useState('NEW')
@@ -26,22 +27,22 @@ export default function LoanApplication() {
     const[tenureError,setTenureError]=useState('')
     const[errorMsg,setErrorMsg]=useState('')
 
-    const[creaditScore,setcreaditScore]=useState('')
-    const[accBalance,setaccBalance]=useState('')
+    const[creaditScore,setcreaditScore]=useState('889')
+    const[accBalance,setaccBalance]=useState('300000')
 
     //let history = useHistory();
 
     //const { id } = useParams();
-    useEffect(() => {
-        loadLoan();
-    }, []);
+    // useEffect(() => {
+    //     loadLoan();
+    // }, []);
 
-    const loadLoan = async () => {
-        console.log(accId);
-        const result = await axios.get(`http://localhost:3032/api/customer/${accId}`);
-        setcreaditScore(result.data.creaditScore);
-        setaccBalance(result.data.accBalance);
-    };
+    // const loadLoan = async () => {
+    //     console.log(accId);
+    //     const result = await axios.get(`http://localhost:3032/api/customer/${accId}`);
+    //     setcreaditScore(result.data.creaditScore);
+    //     setaccBalance(result.data.accBalance);
+    // };
 
     const valid=()=>{
         console.log("in validation");
@@ -81,18 +82,34 @@ export default function LoanApplication() {
                 body:JSON.stringify(LoanApplication)
             }).then(()=>{
                 console.log("New loan Application added")
-                alert("Loan Application is successful" );
+                toast.success('Loan application submitted successfully!', {
+                    position: "top-right",
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    autoClose:2600
+                });
                 setloanamount("");
-                setAccountId("");
+                // setAccountId("");
                 setTenure("");
 
-            })
+            }).catch((error) => {
+                toast.error('Failed to submit loan application!', {
+                    position: "top-right",
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    autoClose:4000
+                });
+            });
         }
         
     }
 
     const handleCancel=(e)=>{
-        //history.push('/');
+        setloanamount("");
+                // setAccountId("");
+        setTenure("");
     }
 
 const Statuses = [
@@ -156,27 +173,6 @@ const Statuses = [
                             value={status}
                             /* onChange={(e)=>setStatus(e.target.value)} *//>
                         </Box>
-                        {/* <Box>
-                         <AddTaskIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField width="120"
-                            id="standard-select-currency-native"
-                            select
-                            label="Status"
-                            value={status}
-                            onChange={(e)=>setStatus(e.target.value)}
-                            SelectProps={{
-                            }}
-                            helperText="Status  of =application"
-                            variant="standard"
-                            >
-                            {Statuses.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                {option.label}
-                                </option>
-                            ))}
-                            </TextField>
-                        </Box> 
-                           <p style={{color:"red", fontSize:"12px"}}>{statusError}</p> */}
                         </Box>
                     </div>
                 </td>

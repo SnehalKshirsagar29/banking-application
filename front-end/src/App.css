@@ -6,8 +6,12 @@
   padding: 0;
   font-family: 'Lato', sans-serif;
 }
-
-.home,
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
 .account,
 .showbalance {
   display: flex;
@@ -28,6 +32,11 @@
 }
 
 .Loan-summary {
+  padding-left: 260px;
+  padding-right: 20px;
+}
+
+.notification_summary {
   padding-left: 260px;
   padding-right: 20px;
 }

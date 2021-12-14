@@ -8,12 +8,14 @@ import { Container } from "react-bootstrap";
 import { MenuItem, Paper, Select } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {AccountBalanceWalletRounded, AppRegistrationOutlined, CodeOffRounded, MailOutline, MarkEmailReadRounded, MobiledataOffOutlined, MoneyOffCsredRounded, Password, PasswordOutlined, PasswordRounded, PauseCircleOutlineRounded, PlayCircleFilledOutlined, PlayCircleFilledRounded, SupervisedUserCircleOutlined } from "@mui/icons-material";
+import {AccountBalanceWalletRounded, 
+        AppRegistrationOutlined, CodeOffRounded, MarkEmailReadRounded, MobiledataOffOutlined,
+        PasswordOutlined} from "@mui/icons-material";
 import AccountApis from "../accounts/AccountApis";
 import { toast } from 'react-toastify';
 import ReactDOM from 'react-dom';
 import App from "../../App";
-
+toast.configure();
 const CreateAccRegistrationForm = () => {
     const paperStyle = { padding: '50px 20px', width: 800, margin: "10px auto" }
 

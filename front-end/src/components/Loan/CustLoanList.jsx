@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 class CustLoanList extends Component{
     constructor(props){
         super(props)
-         let loginuser=localStorage.getItem("user");
+         let loginuser=JSON.parse(localStorage.getItem("user"));
 
         this.state = {
             loans:[],
@@ -42,7 +42,7 @@ render() {
                             this.state.loans.map(
                                 loan =>
                                     <tr key={loan.id}>
-                                        <td><Link to={`/viewloan/${loan.id}`}> {loan.id}</Link></td>
+                                        <td><Link to={`/loans/viewloan/${loan.id}`}> {loan.id}</Link></td>
                                         <td>{loan.accId} </td>
                                         <td>{loan.loan_amount} </td>
                                         <td>{loan.loan_balance} </td>

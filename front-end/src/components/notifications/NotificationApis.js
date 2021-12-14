@@ -6,7 +6,7 @@ class NotificationApis {
 
     // get customer wise notifications
     getNotificationsByCustomerId(customerId) {
-        return axios.get(ACC_BASE_URL + '/' + 'notifications' + '/customer'+'/'+customerId);
+        return axios.get(ACC_BASE_URL + '/notifications/customer/'+customerId);
     }
 
     // get all notifications present in database
@@ -17,7 +17,7 @@ class NotificationApis {
     //get customerwise specific notificatuion
     //  /customer/{customerid}/notification/{id}
     getNotificationByCustomerIdAndNotificationId(customerId,notificationId) {
-        return axios.get(ACC_BASE_URL +  '/customer'+'/'+customerId+  '/' + 'notification'+  '/' +notificationId);
+        return axios.get(ACC_BASE_URL +  '/customer/'+customerId+  '/notification/' +notificationId);
     }
 
 }

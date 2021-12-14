@@ -45,22 +45,6 @@ const LoginForm = () => {
             <App isRegister={true}/>,
             document.getElementById('root')
        );
-        //  <Link to={location => ({ ...location, pathname: "/regiser" })} />
-         //<NavLink className="navbar-item" activeClassName="is-active" to="/register" />
-        //       <CreateAccRegistrationForm  />
-         {/* </NavLink> */}
-
-        // <NavLink exact path="/register" element={<CreateAccRegistrationForm />} />
-        // <BrowserRouter>
-        //     <Routes>
-        //     <Route exact path="/register" element={<CreateAccRegistrationForm />} />
-        //     </Routes>
-        // </BrowserRouter>
-
-    //     ReactDOM.render(
-    //         <CreateAccRegistrationForm  />,
-    //         document.getElementById('root')
-    //    );
     }
 
     const handelCancel = () => {
@@ -90,7 +74,7 @@ const LoginForm = () => {
                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <VisibilityOffIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                         <TextField required id="outlined-required" label="PassWord"
-                        name="passWord" id="passWord" type="text"  value={passwd}
+                        name="passWord" id="passWord" type="password"  value={passwd}
                         onChange={(e) => setpassWord(e.target.value)}
                         />
                     </Box>
