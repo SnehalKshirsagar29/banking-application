@@ -6,15 +6,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class NotificationsSummary extends Component {
     constructor(props) {
         super(props)
+        let loggedInUser = JSON.parse(localStorage.getItem('user'));
         this.state = {
-            statements: []
+            statements: [],
+           // customerId:loggedInUser.accountNumber
+           customerId:111
 
         }
     }
     componentDidMount() {
-         NotificationApis.getAllNotifications(this.state.accountNumber).then((response) => {
+         NotificationApis.getNotificationsByCustomerId(this.state.customerId).then((response) => {
            this.setState({ statements: response.data });
-           console.log("in didi mount: "+this.state.statements);
          });
      
     }
@@ -35,7 +37,7 @@ class NotificationsSummary extends Component {
                         {
                             this.state.statements.map(
                                 stmt =>
-                                    <tr key={stmt.id}>
+                                    <tr key={stmt.customerId}>
                                         <td>{stmt.customerId} </td>
                                         <td>{stmt.notification_date} </td>
                                         <td>{stmt.message} </td>
