@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ACC_BASE_URL = 'http://localhost:8080/api'; 
+const ACC_BASE_URL = 'http://localhost:3038/api'; 
 
 class NotificationApis {
 

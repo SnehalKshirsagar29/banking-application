@@ -24,12 +24,12 @@ public class KafkaConsumerConfig {
    @Bean
    public ConsumerFactory<String, NotificationEntity> consumerFactory() {
       Map<String, Object> props = new HashMap<>();
-      props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+      props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
       props.put(ConsumerConfig.GROUP_ID_CONFIG, "group-id");
       props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
       props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonSerializer.class);
       return new DefaultKafkaConsumerFactory<>(props,new StringDeserializer(),
-              new JsonDeserializer<>(NotificationEntity.class));
+    		  new JsonDeserializer<>(NotificationEntity.class,false));
      // return new DefaultKafkaConsumerFactory<>(props);
    }
    @Bean

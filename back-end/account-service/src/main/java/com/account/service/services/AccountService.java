@@ -1,15 +1,14 @@
 package com.account.service.services;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.account.service.entity.Account;
+import com.account.service.entity.NotificationEntity;
 import com.account.service.entity.Transaction;
 import com.account.service.exceptions.AccountNotFoundException;
 import com.account.service.repositories.AccountServiceRepository;
@@ -22,6 +21,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AccountService {
 
+	private final String TOPIC = "topic-notify";
 	private AccountServiceRepository repo;
 	private TransactionServiceRepository transaction;
 	
@@ -67,14 +67,16 @@ public class AccountService {
 					transaction.setTransactionDate(LocalDate.now());
 					response = this.transaction.save(transaction);
 				}
-				
-				Map<String, Object> map = new HashMap<>();
-				map.put("customerId", "123456");
-				map.put("notification_date", LocalDate.now());
-				map.put("message", "Transaction done successfully!");
-				map.put("email_address", account.getEmail());
-				map.put("phone", account.getMobileNumber());
-				this.transactionService.produceRequest("topic-notification", map);
+				String fromOrTo = (transaction.getTransactionType() == TransactionType.CREDIT) ? "to" : "from";
+				String msg = "You have "+transaction.getTransactionType().toString().toLowerCase()+"ed Rs. "+transaction.getAmount()+" "+fromOrTo+" account : "+account.getAccountNumber();
+				NotificationEntity note = new NotificationEntity(account.getAccountNumber(), LocalDate.now(), msg, account.getEmail(), account.getMobileNumber());
+//				Map<String, Object> map = new HashMap<>();
+//				map.put("customerId", account.getAccountNumber());
+//				map.put("notification_date", LocalDate.now());
+//				map.put("message", "Transaction done successfully!");
+//				map.put("email_address", account.getEmail());
+//				map.put("phone", account.getMobileNumber());
+				this.transactionService.produceRequest(TOPIC, note);
 			} else {
 				throw new AccountNotFoundException("Account not found! : "+accountNumber);
 			}

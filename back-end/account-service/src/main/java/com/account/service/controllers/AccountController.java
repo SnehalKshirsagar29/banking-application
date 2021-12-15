@@ -43,6 +43,7 @@ public class AccountController {
 
 	@PostMapping(path = "/accounts")
 	public ResponseEntity<Account> addAccount(@RequestBody Account account) {
+		System.out.println("Before : Account : "+account);
 		if(account != null) {
 			account.setAccountNumber(AccountHelper.generateAccountNum());
 			account.setDate(LocalDate.now());
@@ -57,6 +58,7 @@ public class AccountController {
 				.path("/{id}")
 				.buildAndExpand(account.getAccountNumber())
 				.toUri();
+		System.out.println("After : account : "+acc);
 		return ResponseEntity.created(location).body(acc);
 	}
 	

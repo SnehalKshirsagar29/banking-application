@@ -32,6 +32,7 @@ public class TransactionService {
 	 
 	public void produceRequest(String topic, Object payload) {
 		try {
+			System.out.println("Produce payload : "+payload);
 			kafkaTemplate.send(topic, payload);
 		} catch (Exception e) {
 			e.printStackTrace();

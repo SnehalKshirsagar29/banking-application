@@ -1,11 +1,6 @@
 package com.example.demo.service;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,11 +15,11 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class NotificationServiceForKafka {
-	
+	private final String TOPIC = "topic-notify";
 	@Autowired
 	private NotificationRepository repos;
 	
-	@KafkaListener(topics = "topic-notification", groupId = "group-id")
+	@KafkaListener(topics = TOPIC, groupId = "group-id")
 	public void listen(NotificationEntity entity) {
 		
 	  Long  randomId = ThreadLocalRandom.current().nextLong(1, 1000000); 

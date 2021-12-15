@@ -15,6 +15,7 @@ class NotificationsSummary extends Component {
     componentDidMount() {
          NotificationApis.getNotificationsByCustomerId(this.state.customerId).then((response) => {
            this.setState({ statements: response.data });
+           console.log("note : "+JSON.stringify(response.data));
          });
      
     }

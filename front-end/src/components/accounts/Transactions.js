@@ -89,7 +89,7 @@ class Transactions extends Component {
             <div className="transaction-form">
                 <form id="form" action="#" method="PUT" >
                     <Box className="transaction-outer-box" bgcolor="antiquewhite" p={1}>
-                        <h1>Transaction</h1>
+                        <h3>Transactions</h3>
                         <Box className="transaction-inner-box" bgcolor="lightgray" p={1} >
                             <div class="leftcontact">
                                 <div class="form-group">

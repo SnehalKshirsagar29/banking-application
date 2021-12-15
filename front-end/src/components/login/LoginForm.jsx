@@ -56,7 +56,7 @@ const LoginForm = () => {
     return (
         <Container>
         <Paper elevation={3} style={paperStyle}>
-             <h1>Sign into Account</h1>
+             <h1>Sign into Bank of Mysore</h1>
      <div>
         <form action="">
             <table>
