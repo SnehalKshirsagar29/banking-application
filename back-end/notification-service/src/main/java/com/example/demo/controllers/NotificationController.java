@@ -13,7 +13,7 @@ import com.example.demo.entity.NotificationEntity;
 import com.example.demo.service.NotificationService;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/notification-service")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class NotificationController {
 
