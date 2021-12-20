@@ -2,6 +2,7 @@ package com.account.service.controllers;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,26 +25,29 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.account.service.entity.Account;
+import com.account.service.entity.LoginResponse;
 import com.account.service.entity.Transaction;
-import com.account.service.exceptions.AccountNotFoundException;
+import com.account.service.entity.User;
 import com.account.service.services.AccountService;
+import com.account.service.services.LoginService;
 import com.account.service.services.TransactionService;
 import com.account.service.utils.AccountHelper;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/account-service")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AccountController {
-
 	@Autowired
 	private AccountService service;
 
 	@Autowired
 	private TransactionService transaction;
+	
+	@Autowired
+	private LoginService loginService;
 
-	@PostMapping(path = "/accounts")
+	@PostMapping(path = "accounts/add-account")
 	public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-		System.out.println("Before : Account : "+account);
 		if(account != null) {
 			account.setAccountNumber(AccountHelper.generateAccountNum());
 			account.setDate(LocalDate.now());
@@ -52,99 +56,117 @@ public class AccountController {
 		} else {
 			System.err.println("Invalid request!");
 		}
-		Account acc = service.addAccount(account);
+		Account response = service.addAccount(account);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(account.getAccountNumber())
 				.toUri();
-		System.out.println("After : account : "+acc);
-		return ResponseEntity.created(location).body(acc);
+		return ResponseEntity.created(location).body(response);
 	}
 	
-	@GetMapping(path = "/account/{id}")
+	@GetMapping(path = "accounts/{id}")
 	public Optional<Account> getAccountById(@PathVariable Long id) {
 		return this.service.getAccountById(id);
 	}
 	
 
 	@GetMapping(path = "/login")
-	public ResponseEntity<Object> checkLogin(@RequestParam String username, @RequestParam Long password) {
-		System.out.println("username : "+username+" : passwd : "+password);
-		if(username != null && !username.isEmpty()) {
-//			Map<String, Object> map1 = new HashMap<>();
-//			map1.put("username", "ganesh");
-//			map1.put("password", "123");
-//			map1.put("msg", "Success");
-//			return ResponseEntity.ok(map1);
-			Account account = this.service.getAccountByEmail(username);
-			System.out.println("account :::: "+account);
-			if(account != null) {
-				if(account.getPassword() == password) {
-					Map<String, Object> map = new HashMap<>();
-					map.put("username", account.getEmail());
-					map.put("accountNumber", account.getAccountNumber());
-					map.put("firstName", account.getFirstName());
-					map.put("lastName", account.getLastName());
-					map.put("msg", "Success");
-					return ResponseEntity.ok(map);
-				} else {
-					throw new AccountNotFoundException("Invalid credentials! ");
-				}
-			} else {
-				throw new AccountNotFoundException("Account not found! Please create account first.");
-			}
-		}
-		return ResponseEntity.ok(new HashMap<String, Object>());
+	public ResponseEntity<LoginResponse> login(@RequestParam String username, @RequestParam String password) {
+		return this.loginService.login(username, password);
 	}
 
-	@GetMapping(path = "/account/{accountNumber}/statements/sort")
+	@GetMapping(path = "accounts/{accountNumber}/get-transactions/sort")
 	public List<Transaction> getSortedStatementBetweenDates(
 			@PathVariable Long accountNumber,
 			@RequestParam @DateTimeFormat(iso = ISO.DATE) LocalDate start_date, 
 			@RequestParam @DateTimeFormat(iso = ISO.DATE) LocalDate end_date,
 			@RequestParam String sort,
 			@RequestParam String sort_order) {
-		// GET - http://<domain>:<port>/api/accounts/{id}/statement?start_date=<data>&&end_date=<date>&&sort=<amount>&&sort_order=<asc|desc>
-		//http://localhost:2222/api/accounts/101/statement?start_date=2020-08-07&&end_date=2021-09-08&&sort=20000&&sort_order=asc&size=2&page=0
 		try {
 			Sort sortObj = sort_order.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort);
 			List<Transaction> transactions = this.transaction.findByAccountNumberAndTransactionDateBetween(accountNumber, start_date, end_date, sortObj);
 			return transactions;
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
-	@GetMapping(path = "/account/statements")
+	@GetMapping(path = "accounts/get-all-accounts")
 	public List<Account> getAllAccounts() {
 		return this.service.getAllAccounts();
 	}
-
-	@GetMapping(path = "/account/{accId}/statements")
-	public List<Transaction> getAllStatementsOfAccount(@PathVariable Long accId) {
-		return this.service.getAllTransactionsByAccId(accId);
+	
+	@GetMapping(path = "accounts/get-sorted-accounts/{accountType}")
+	public List<Account> sortAccountsByDate(@PathVariable String accountType) {
+		return this.service.findByAccountType(accountType);
 	}
 
-	@GetMapping(path = "/account/balance/{id}")
-	public Double getAccountBalance(@PathVariable Long id) {
-		return this.service.getAccountBalance(id);
+//	@GetMapping(path = "accounts/get-sorted-accounts")
+//	public List<Account> sortAccountsByDate(
+//			@RequestParam @DateTimeFormat(iso = ISO.DATE) LocalDate start_date, 
+//			@RequestParam @DateTimeFormat(iso = ISO.DATE) LocalDate end_date,
+//			@RequestParam String sort,
+//			@RequestParam String sort_order,
+//			@RequestParam String accountType) {
+//		try {
+//			Sort sortObj = sort_order.equalsIgnoreCase("desc") ? Sort.by(sort).descending() : Sort.by(sort);
+//			List<Account> accounts = null;
+//			if(accountType.equalsIgnoreCase("all"))
+//				accounts = this.service.findByDateBetween(start_date, end_date, sortObj);
+//			else 
+//				accounts = this.service.findByAccountTypeAndDateBetween(accountType, start_date, end_date, sortObj);
+//			return accounts;
+//		} catch (Exception e) {
+//			return Collections.emptyList();
+//		}
+//	}
+//	
+	@GetMapping(path = "accounts/{accountNumber}/get-all-transactions")
+	public List<Transaction> getAllStatementsOfAccount(@PathVariable Long accountNumber) {
+		return this.service.getAllTransactionsByAccountNumber(accountNumber);
 	}
 
-	@PutMapping(path = "/account/transaction/{accountNumber}")
+	@GetMapping(path = "accounts/{accountNumber}/balance")
+	public Double getAccountBalance(@PathVariable Long accountNumber) {
+		return this.service.getAccountBalance(accountNumber);
+	}
+
+	@PutMapping(path = "accounts/{accountNumber}/transaction")
 	public ResponseEntity<Transaction> doTransaction( @PathVariable Long accountNumber,
 			@RequestBody Transaction transaction) {
 		return this.service.doTransaction(accountNumber,transaction);
 	}
 	
-	@GetMapping(path = "/account/score/{id}")
-	public ResponseEntity<Object> getAccountBalanceAndScore(@PathVariable Long id) {
-		Optional<Account> account = this.service.getAccountById(id);
+	@GetMapping(path = "accounts/{accountNumber}/score")
+	public ResponseEntity<Object> getAccountBalanceAndScore(@PathVariable Long accountNumber) {
+		Optional<Account> account = this.service.getAccountById(accountNumber);
 		Map<String, Object> map = new HashMap<>();
 		if(account.isPresent()) {
 			map.put("balance", account.get().getBalance());
 			map.put("score", account.get().getScore());
 		}
 		return ResponseEntity.ok(map);
+	}
+	
+	@PostMapping(path = "/add-admin-user")
+	public ResponseEntity<User> addAdminUser(@RequestBody User user) {
+		User response = this.loginService.createAdminUser(user);
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(user.getId())
+				.toUri();
+		return ResponseEntity.created(location).body(response);
+	}
+	
+	@GetMapping(path = "/get-all-users")
+	public List<User> getAllUsersOfRoles() {
+		return this.loginService.getAllUsers();
+	}
+	
+	@GetMapping(path = "/get-users-by-role/{role}")
+	public List<User> getUsersByRole(@PathVariable String role) {
+		return this.loginService.getUsersOfRole(role);
 	}
 }

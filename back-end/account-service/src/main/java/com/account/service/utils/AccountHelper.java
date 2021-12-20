@@ -1,12 +1,31 @@
 package com.account.service.utils;
 
+import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
+
+import com.account.service.entity.Account;
+import com.account.service.entity.User;
 
 public class AccountHelper {
 
 	public static long generateAccountNum() {
 		  ThreadLocalRandom random = ThreadLocalRandom.current();
 		  return random.nextLong(10_000_000_000L, 100_000_000_000L);
+	}
+
+	public static User generateUserObject(Account accountObj) {
+		return new User (
+		ThreadLocalRandom.current().nextLong(1, 1000000),
+		accountObj.getFirstName(),
+		accountObj.getLastName(),
+		"",
+		accountObj.getEmail(),
+		"User",
+		accountObj.getMobileNumber(),
+		0, 
+		LocalDate.now(),
+		accountObj.getPassword()
+		);
 	}
 	
 //	public static Map<String, Object> getNotificationRequest(Account account) {

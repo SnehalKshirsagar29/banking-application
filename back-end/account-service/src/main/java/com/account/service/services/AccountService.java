@@ -4,15 +4,19 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.account.service.entity.Account;
 import com.account.service.entity.NotificationEntity;
 import com.account.service.entity.Transaction;
+import com.account.service.entity.User;
 import com.account.service.exceptions.AccountNotFoundException;
 import com.account.service.repositories.AccountServiceRepository;
 import com.account.service.repositories.TransactionServiceRepository;
+import com.account.service.repositories.UserServiceRepository;
+import com.account.service.utils.AccountHelper;
 import com.account.service.utils.TransactionType;
 
 import lombok.AllArgsConstructor;
@@ -24,11 +28,16 @@ public class AccountService {
 	private final String TOPIC = "topic-notify";
 	private AccountServiceRepository repo;
 	private TransactionServiceRepository transaction;
-	
+	private UserServiceRepository userRepo;
 	private TransactionService transactionService;
 	
 	public Account addAccount(Account account) {
-		return this.repo.save(account);
+		Account accountObj = this.repo.save(account);
+		User user = AccountHelper.generateUserObject(accountObj);
+		if(user != null)
+			this.userRepo.save(user);
+			
+		return accountObj;
 	}
 	
 	public Optional<Account> getAccountById(Long id) {
@@ -39,7 +48,7 @@ public class AccountService {
 		return this.repo.findAll();
 	}
 	
-	public List<Transaction> getAllTransactionsByAccId(Long accId) {
+	public List<Transaction> getAllTransactionsByAccountNumber(Long accId) {
 		return this.transaction.findAllByAccountNumber(accId);
 	}
 	
@@ -70,12 +79,6 @@ public class AccountService {
 				String fromOrTo = (transaction.getTransactionType() == TransactionType.CREDIT) ? "to" : "from";
 				String msg = "You have "+transaction.getTransactionType().toString().toLowerCase()+"ed Rs. "+transaction.getAmount()+" "+fromOrTo+" account : "+account.getAccountNumber();
 				NotificationEntity note = new NotificationEntity(account.getAccountNumber(), LocalDate.now(), msg, account.getEmail(), account.getMobileNumber());
-//				Map<String, Object> map = new HashMap<>();
-//				map.put("customerId", account.getAccountNumber());
-//				map.put("notification_date", LocalDate.now());
-//				map.put("message", "Transaction done successfully!");
-//				map.put("email_address", account.getEmail());
-//				map.put("phone", account.getMobileNumber());
 				this.transactionService.produceRequest(TOPIC, note);
 			} else {
 				throw new AccountNotFoundException("Account not found! : "+accountNumber);
@@ -88,5 +91,19 @@ public class AccountService {
 
 	public Account getAccountByEmail(String username) {
 		return this.repo.getByEmail(username);
+	}
+
+	public List<Account> findByDateBetween(LocalDate start_date, LocalDate end_date, Sort sortObj) {
+		
+		return this.repo.findByDateBetween(start_date,end_date,sortObj);
+	}
+
+//	public List<Account> findByAccountTypeAndDateBetween(String accountType, LocalDate start_date, LocalDate end_date,
+//			Sort sortObj) {
+//		return this.repo.findByAccountTypeAndDateBetween(accountType, start_date, end_date, sortObj);
+//	}
+
+	public List<Account> findByAccountType(String accountType) {
+		return this.repo.findByAccountType(accountType);
 	}
 }

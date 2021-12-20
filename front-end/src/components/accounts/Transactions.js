@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Box from '@material-ui/core/Box';
 import { Radio } from '@material-ui/core';
 import { FaComment, FaRupeeSign } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 toast.configure();
 class Transactions extends Component {
     constructor(props) {
@@ -114,7 +115,7 @@ class Transactions extends Component {
                                     <button type="submit" className="btn btn-primary btn-block" onClick={this.onSubmit}
                                     disabled={!this.state.amount || !this.state.transactionType} > Submit </button> &nbsp; &nbsp; &nbsp;
                                     <button type="submit" className="btn btn-secondary btn-block" onClick={this.resetState}
-                                    disabled={!this.state.amount && !this.state.comment && !this.state.transactionType} > Reset </button>
+                                    disabled={!this.state.amount && !this.state.comment && !this.state.transactionType} > Reset </button>  &nbsp; &nbsp;
                                 </div>
                             </div>
                             <div class="rightcontact">

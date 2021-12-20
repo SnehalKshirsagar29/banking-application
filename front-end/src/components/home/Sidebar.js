@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import styled from 'styled-components'
-import { SidebarData } from './SidebarData'
+import { SidebarData, SidebarDataAdmin } from './SidebarData'
 import { IconContext } from 'react-icons/lib'
 import SubMenus from './SubMenus';
 import { IoMdLogOut } from 'react-icons/io'
@@ -71,6 +71,10 @@ const Sidebar = () => {
     const [logoutbar, setLogoutbar] = useState(false)
     const showLogoutbar = () => setLogoutbar(!logoutbar)
 
+    let loggedInUser = JSON.parse(localStorage.getItem('user'));
+    console.log("User :" +loggedInUser.roleName);
+    if(loggedInUser.roleName === "User")
+    {
     return (
         <>
             <IconContext.Provider value={{ color: '#fff' }}>
@@ -87,6 +91,7 @@ const Sidebar = () => {
                         <NavIcon to="#">
                             <AiIcons.AiOutlineClose onClick={showSidebar} />
                         </NavIcon>
+                        
                         {SidebarData.map((item, index) => {
                             return <SubMenus item={item} key={index} />;
                         })}
@@ -105,6 +110,44 @@ const Sidebar = () => {
             </IconContext.Provider>
         </>
     );
+}
+else if(loggedInUser.roleName === "Admin" || loggedInUser.roleName === "Super Admin") {
+    return (
+        <>
+            <IconContext.Provider value={{ color: '#fff' }}>
+                <Nav>
+                    <NavIcon to="#">
+                        <FaIcons.FaBars onClick={showSidebar} />
+                    </NavIcon>
+                    <LogOutIcon to="#">
+                        <IoMdLogOut onClick={showLogoutbar} />
+                    </LogOutIcon>
+                </Nav>
+                <Sidebarnav sidebar={sidebar}>
+                    <Sidebarwrap>
+                        <NavIcon to="#">
+                            <AiIcons.AiOutlineClose onClick={showSidebar} />
+                        </NavIcon>
+                        
+                        {SidebarDataAdmin.map((item, index) => {
+                            return <SubMenus item={item} key={index} />;
+                        })}
+                    </Sidebarwrap>
+                </Sidebarnav>
+                <Logoutbarnav logoutbar={logoutbar}>
+                     <Sidebarwrap>
+                        <NavIcon to="#">
+                            <AiIcons.AiOutlineClose onClick={showLogoutbar} />
+                        </NavIcon>
+                        {LogoutData.map((item, index) => {
+                             return <LogoutMenus item={item} key={index} />;
+                        })}
+                    </Sidebarwrap> 
+                </Logoutbarnav>
+            </IconContext.Provider>
+        </>
+    );
+}
 };
 
 export default Sidebar

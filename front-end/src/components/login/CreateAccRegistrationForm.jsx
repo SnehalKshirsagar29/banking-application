@@ -110,7 +110,7 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <AccountCircleIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="LastName"
-                                                    name="lastName" id="lastName" type="text"
+                                                    name="lastName" type="text"
                                                     value={userRegistration.lastName}
                                                     onChange={handelInput}
                                                 />
@@ -122,7 +122,7 @@ const CreateAccRegistrationForm = () => {
                                                     <InputLabel id="demo-simple-select-label">Branch Name</InputLabel>
                                                     <Select
                                                         labelId="demo-simple-select-label"  required id="outlined-required"
-                                                        name="branchName" id="branchName"
+                                                        name="branchName"
                                                         value={userRegistration.branchName}
                                                         label="Branch Name"
                                                         onChange={handelInput}
@@ -136,7 +136,7 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <CodeOffRounded sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="IFSC Code"
-                                                    name="ifscCode" id="ifscCode" type="text"
+                                                    name="ifscCode" type="text"
                                                     value={userRegistration.ifscCode}
                                                     onChange={handelInput}
                                                 />
@@ -147,7 +147,7 @@ const CreateAccRegistrationForm = () => {
                                                     <InputLabel id="demo-simple-select-label">Account Type</InputLabel>
                                                     <Select
                                                         labelId="demo-simple-select-label"  required id="outlined-required"
-                                                        name="accountType" id="accountType"
+                                                        name="accountType"
                                                         value={userRegistration.accountType}
                                                         label="Account Type"
                                                         onChange={handelInput}
@@ -160,7 +160,7 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <MarkEmailReadRounded sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="Email"
-                                                    name="email" id="email" type="text"
+                                                    name="email" type="text"
                                                     value={userRegistration.email}
                                                     onChange={handelInput}
                                                 />
@@ -168,7 +168,7 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <MobiledataOffOutlined sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="Mobile"
-                                                    name="mobileNumber" id="mobileNumber" type="text"
+                                                    name="mobileNumber" type="text"
                                                     value={userRegistration.mobileNumber}
                                                     onChange={handelInput}
                                                 />
@@ -176,7 +176,7 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <PasswordOutlined sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="New Password"
-                                                    name="password" id="password" type="password"
+                                                    name="password" type="password"
                                                     value={userRegistration.password}
                                                     onChange={handelInput}
                                                 />
@@ -184,7 +184,7 @@ const CreateAccRegistrationForm = () => {
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <PasswordOutlined sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                                                 <TextField required id="outlined-required" label="Confirm Passworrd"
-                                                    name="retypePassword" id="retypePassword" type="password"
+                                                    name="retypePassword"  type="password"
                                                     value={userRegistration.retypePassword}
                                                     onChange={handelInput}
                                                 />

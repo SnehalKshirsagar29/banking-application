@@ -3,6 +3,7 @@ import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import * as IoIcons from 'react-icons/io'
 import * as RiIcons from 'react-icons/ri'
+import { AccountTree } from '@mui/icons-material'
 
 export const SidebarData = [
 {
@@ -12,7 +13,7 @@ export const SidebarData = [
 },
 {
     title: 'Accounts',
-    path: '/home',
+    path: '#',
     icon: <AiIcons.AiFillAccountBook />,
     iconClosed : <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -36,7 +37,7 @@ export const SidebarData = [
 },
 {
     title: 'Customer',
-    path: '/home',
+    path: '#',
     icon: <FaIcons.FaUser />,
     iconClosed : <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -60,7 +61,7 @@ export const SidebarData = [
 },
 {
     title: 'Loans',
-    path: '/home',
+    path: '#',
     icon: <FaIcons.FaUserClock />,
     iconClosed : <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -74,11 +75,6 @@ export const SidebarData = [
             title: 'Show Loan Details',
             path: '/loans/details',
             icon: <IoIcons.IoIosPaper />
-        },
-        {
-            title: 'Loan Applications',
-            path: '/loans/applications',
-            icon: <IoIcons.IoIosPaper />
         }
     ]
 },
@@ -88,3 +84,44 @@ export const SidebarData = [
     icon: <IoIcons.IoIosNotifications />
 }
 ]
+
+export const SidebarDataAdmin = [
+    {
+        title: 'Home',
+        path: '/home',
+        icon: <AiIcons.AiFillHome />
+    },
+    {
+        title: 'Accounts',
+        path: '#',
+        icon: <AiIcons.AiFillAccountBook />,
+        iconClosed : <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+            {
+                title: 'Bank Accounts',
+                path: '/accounts',
+                icon: <AccountTree />
+            }
+        ]
+    },
+    {
+        title: 'Loans',
+        path: '#',
+        icon: <FaIcons.FaUserClock />,
+        iconClosed : <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+            {
+                title: 'Loan Applications',
+                path: '/loans/applications',
+                icon: <IoIcons.IoIosPaper />
+            }
+        ]
+    },
+    {
+        title: 'Users',
+        path: '/users',
+        icon: <FaIcons.FaUsers />
+    },
+    ]

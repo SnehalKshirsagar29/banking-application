@@ -7,9 +7,9 @@ import { Container } from "react-bootstrap";
 import { Paper } from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import axios from "axios";
 import ReactDOM from 'react-dom';
 import App from "../../App";
+import AccountApis from "../accounts/AccountApis";
 
 const LoginForm = () => {
     const paperStyle={padding:'50px 20px', width:700,margin:"10px auto"}
@@ -20,20 +20,16 @@ const LoginForm = () => {
     const submitForm = (e) => {
         e.preventDefault();
         console.log("Inside submitForm : username : "+username+" : passwd : "+passwd);
-        axios.get('http://localhost:2222/api/login', {
-            params: {
-              'username': username,
-              'password': passwd
-            }
-        }).then( response => {
+        AccountApis.loginToAccount(username,passwd).then( response => {
             console.log("response.data : "+JSON.stringify(response.data));
             if(response.data.msg === 'Success') {
                 console.log("inside codition.......");
                localStorage.setItem('user', JSON.stringify(response.data));
-               ReactDOM.render(
-                    <App  />,
-                    document.getElementById('root')
-               );
+               window.location.assign('/home/');
+            //    ReactDOM.render(
+            //         <App  />,
+            //         document.getElementById('root')
+            //    );
             }
         });
     }
