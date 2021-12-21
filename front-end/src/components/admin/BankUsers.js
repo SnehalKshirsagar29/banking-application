@@ -28,9 +28,9 @@ export default class BankUsers extends Component {
       });
   }
 
-  // componentDidMount() {
-  //   this.gitAllBankUsers();
-  // }
+  componentDidMount() {
+    this.gitAllBankUsers();
+  }
 
   sortUsers = (e) => {
     this.setState({ [e.target.name]: e.target.value });
