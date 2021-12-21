@@ -3,7 +3,6 @@ import AccountApis from './AccountApis';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import paginate from 'paginate-array';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { Link } from 'react-router-dom';
 class BankAccounts extends Component {
   constructor(props) {
     super(props)
@@ -151,7 +150,7 @@ class BankAccounts extends Component {
               <button type="button" class="btn btn-primary" onClick={this.previousPage}
                 disabled={currPage.currentPage <= 1} >Previous</button> &nbsp; &nbsp;
               <button type="button" class="btn btn-primary" onClick={this.nextPage}
-                disabled={currPage.totalPages === currPage.currentPage} >Next</button>
+                disabled={currPage.totalPages === 0 || currPage.totalPages === currPage.currentPage} >Next</button>
             </div>
           </ul>
         }

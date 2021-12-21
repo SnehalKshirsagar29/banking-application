@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import AccountApis from './AccountApis';
 import { toast } from 'react-toastify';
+import { Paper, TextField } from "@mui/material";
 import 'react-toastify/dist/ReactToastify.css';
-import Box from '@material-ui/core/Box';
 import { Radio } from '@material-ui/core';
 import { FaComment, FaRupeeSign } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import logo from '../../images/sbm.png'
 toast.configure();
+
+const paperStyle={padding:'35px 20px', width:700,height:430,margin:"30px auto"}
+const textareaStyle = {width:225}
 class Transactions extends Component {
     constructor(props) {
         super(props);
@@ -77,6 +80,13 @@ class Transactions extends Component {
     onChange = (e) =>
         this.setState({ [e.target.name]: e.target.value });
 
+    onChangeNumber = (e) => {
+        const regex = /^[+]?\d+([.]\d+)?$/;// /^[0-9\b]+$/;
+        if (e.target.value === '' || regex.test(e.target.value)) {
+            this.setState({ [e.target.name]: e.target.value })
+        }
+    }
+
     resetState = (e) => {
         e.preventDefault()
         this.setState({
@@ -86,8 +96,58 @@ class Transactions extends Component {
         });
     }
     render() {
+        const logoStyle = {height:55, padding:'12px 0px'}
+        const textStyle = {color:'purple'}
+        const imageStyle = {height:40, width: 40}
         return (
-            <div className="transaction-form">
+            <Paper elevation={3} style={paperStyle}>
+                 <h4 style={textStyle}><img style={imageStyle} src={logo} alt="Not Found" className="rounded" />
+                 <b> Transactions with SBM is completely Safe and Secure</b></h4><br />
+                <div class="leftcontact">
+                                <div class="form-group">
+                                    <span style={logoStyle} class="icon-case"><FaRupeeSign sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></span>
+                                    <TextField type="number" name="amount" placeholder="amount" value={this.state.amount} onChange={this.onChangeNumber} />
+                                </div> <br />
+                                <div class="form-group">
+                                    <span style={logoStyle} class="icon-case"><FaComment sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></span>
+                                    <textarea style={textareaStyle} name="comment" rows="3" placeholder="comment" value={this.state.comment} onChange={this.onChange} />
+                                </div> <br />
+                                <div>
+                                    <Radio type="radio" name="transactionType" color= "Black" value="CREDIT" checked={this.state.transactionType === "CREDIT"}
+                                        onChange={this.onChange} /> 
+                                    <span><b>CREDIT</b></span>
+                                    &nbsp; &nbsp; 
+                                    <Radio type="radio" name="transactionType" color= "Black" value="DEBIT" checked={this.state.transactionType === "DEBIT"}
+                                        onChange={this.onChange}  />
+                                    <span><b>DEBIT</b></span> <br />
+                                </div><br />
+
+                                <div>
+                                    <button type="submit" className="btn btn-primary btn-block" onClick={this.onSubmit}
+                                    disabled={this.state.amount <= 0 || !this.state.transactionType} > Submit </button> &nbsp; &nbsp; &nbsp;
+                                    <button type="submit" className="btn btn-secondary btn-block" onClick={this.resetState}
+                                    disabled={!this.state.amount && !this.state.comment && !this.state.transactionType} > Reset </button>  &nbsp; &nbsp;
+                                </div>
+                            </div>
+                            <div class="rightcontact">
+                                <div>
+                                    <label><b style={textStyle}> Account No : </b> {this.state.accountNumber} </label> <br /> <br />
+                                    <label><b style={textStyle}> Account Holder Name : </b>{this.state.accountHolderName} </label> <br /> <br />
+                                    <label><b style={textStyle}> Branch : </b>{this.state.branchName} </label> <br /> <br />
+                                    <label><b style={textStyle}> Bank Name : </b>{this.state.bankName} </label> <br /> <br />
+                                    <label><b style={textStyle}> IFSC Code : </b>{this.state.ifscCode} </label> <br /> <br />
+                                    <label><b style={textStyle}> Account Type : </b>{this.state.accountType} </label> <br /> <br />
+                                </div>
+                </div>
+
+
+
+
+
+
+
+
+            {/* <div className="transaction-form">
                 <form id="form" action="#" method="PUT" >
                     <Box className="transaction-outer-box" bgcolor="antiquewhite" p={1}>
                         <h3>Transactions</h3>
@@ -131,7 +191,8 @@ class Transactions extends Component {
                         </Box>
                     </Box>
                 </form>
-            </div>
+            </div> */}
+            </Paper>
         )
     }
 }

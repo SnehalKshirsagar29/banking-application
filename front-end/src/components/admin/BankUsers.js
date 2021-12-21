@@ -28,18 +28,9 @@ export default class BankUsers extends Component {
       });
   }
 
-  componentDidMount() {
-    // AccountApis.getAllUsers().then(response => response.data)
-    //   .then(admins => {
-    //     console.log("admins :" + admins);
-    //     this.setState({
-    //       admins
-    //     });
-    //   }).catch((error) => {
-    //     console.log("error :" + error.response.data);
-    //   });
-    this.gitAllBankUsers();
-  }
+  // componentDidMount() {
+  //   this.gitAllBankUsers();
+  // }
 
   sortUsers = (e) => {
     this.setState({ [e.target.name]: e.target.value });

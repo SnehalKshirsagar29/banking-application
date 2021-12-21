@@ -54,12 +54,6 @@ class TransactionSummary extends Component {
       }).catch((error) => {
         console.log("error :" + error.response.data);
       });
-    // .then((response) => {
-    //     this.setState({ statements: [] });
-    //     this.setState({ statements: response.data });
-    // }).catch((error) => {
-    //     console.log("error :"+error.response.data);
-    // });
     console.log("Updates state : " + this.state);
   }
 
@@ -93,13 +87,15 @@ class TransactionSummary extends Component {
 
   render() {
     const { currPage } = this.state;
-    console.log("statesss : currPage : " + JSON.stringify(currPage));
-    console.log("totalPages : " + this.state.currPage);
+    console.log("render : currPage : " + JSON.stringify(currPage));
+    //console.log('currPage.totalPages : '+currPage.totalPages)
+    //console.log('currPage.currentPage : '+currPage.currentPage)
+    const textStyle = {color:'purple'}
     return (
       <div className="transaction-summary">
         {/* <div class="btn-text-right">  */}
         <div class="summaryContent">
-          <h3>Transactions summary :</h3>
+          <h4 style={textStyle}> <b>Transactions Summary</b></h4>
         </div>
         {currPage &&
           <ul>
@@ -107,11 +103,11 @@ class TransactionSummary extends Component {
               <input type="date" name="startDate" value={this.state.startDate} onChange={this.onChange} /> &nbsp;
               <input type="date" name="endDate" value={this.state.endDate} onChange={this.onChange} /> &nbsp; &nbsp;
               <button type="button" className="btn btn-primary" onClick={this.sortStatements}
-                disabled={!this.state.startDate || !this.state.endDate} > Go </button> &nbsp; &nbsp; &nbsp; &nbsp;
-              <button type="button" class="btn btn-primary" onClick={this.previousPage}
+                disabled={!this.state.startDate || !this.state.endDate} > Go </button>
+              {/* <button type="button" class="btn btn-primary" onClick={this.previousPage}
                 disabled={currPage.currentPage <= 1} >Previous</button> &nbsp; &nbsp;
               <button type="button" class="btn btn-primary" onClick={this.nextPage}
-                disabled={currPage.totalPages === currPage.currentPage} >Next</button>
+                disabled={currPage.totalPages === currPage.currentPage} >Next</button> */}
               {/* </ul>} */}
             </div> <br />
             {/* {currPage &&
@@ -143,6 +139,12 @@ class TransactionSummary extends Component {
                 }
               </tbody>
             </table>
+            <div class="pagination-buttons">
+              <button type="button" class="btn btn-primary" onClick={this.previousPage}
+                disabled={currPage.currentPage <= 1} >Previous</button> &nbsp; &nbsp;
+              <button type="button" class="btn btn-primary" onClick={this.nextPage}
+                disabled={currPage.totalPages === 0 || currPage.totalPages === currPage.currentPage} >Next</button>
+            </div>
           </ul>
         }
       </div>

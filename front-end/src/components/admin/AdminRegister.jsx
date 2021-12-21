@@ -7,13 +7,14 @@ import { Container } from "react-bootstrap";
 import { MenuItem, Paper, Select } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { AppRegistrationOutlined, ContactPhone, EmailOutlined, Group, PasswordOutlined
+import { AppRegistrationOutlined, ArrowBack, ContactPhone, EmailOutlined, Group, PasswordOutlined
 } from "@mui/icons-material";
 import AccountApis from "../accounts/AccountApis";
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 toast.configure();
 
-const paperStyle = { padding: '40px 30px', width: 800, margin: "10px auto", color: 'purple' }
+const paperStyle = { padding: '10px 30px', width: 800, margin: "10px auto", color: 'purple' }
 
 class AdminRegister extends Component {
 
@@ -33,7 +34,31 @@ class AdminRegister extends Component {
             }
         }
         this.addAdmin = this.addAdmin.bind(this);
+        // this.disabledResetButton = this.disabledResetButton(this);
       }
+
+      setEmptyState = () => {
+        this.setState({
+            admin: {
+                firstName: '',
+                middleName: '',
+                lastName: '',
+                emailId: '',
+                contactNumber: '',
+                age: '',
+                roleName:'',
+                password:'',
+                conformPassword:''
+            },
+            isResetDisabled:true,
+            isRegisterDisabled:true
+        });
+      }
+
+    resetState = (e) => {
+        e.preventDefault()
+        this.setEmptyState();
+    }
     onChange = (e) => {
         const admin = {...this.state.admin};
               admin[e.target.name] = e.target.value;
@@ -66,27 +91,38 @@ class AdminRegister extends Component {
                      autoClose:4000
                  });
              });
-             this.setState({
-                admin: {
-                    firstName: '',
-                    middleName: '',
-                    lastName: '',
-                    emailId: '',
-                    contactNumber: '',
-                    age: '',
-                    roleName:'',
-                    password:'',
-                    conformPassword:''
-                }
-            });
-             console.log("In addAdmin : setEmptyState : "+JSON.stringify(this.state));
+             this.setEmptyState();
     }
+
+    // disabledResetButton = () => {
+    //     console.log("start===========")
+    //     let abc = Object.values(this.state.admin);
+    //     console.log("abc= "+JSON.stringify(abc))
+    //     let isDisabled = true;
+    //     for (let index = 0; index < abc.length; index++) {
+    //         if(abc[index].length > 0) {
+    //             console.log("Reset enabled!!!!!!!!!!")
+    //             return false;
+    //         }
+    //     }
+    //     console.log("Reset disabled!!!!!!!!!!")
+    //     return isDisabled;
+    //     // const {firstName, middleName, lastName, emailId, contactNumber, age, roleName, password, conformPassword} = this.state.admin
+    //     // return firstName || middleName || lastName || emailId || contactNumber || age || roleName || password || conformPassword
+    // }
+
+    // disabledRegisterButton = () => {
+
+    // }
 
     render() {
         return (
             <Container>
                 <Paper elevation={3} style={paperStyle}>
-                    <h1>Create new admin for State Bank Of Mysore</h1>
+                    <Link className="btn btn-primary" to="/users">
+                        <ArrowBack />
+                    </Link>
+                    <h1><b>Create new admin for State Bank Of Mysore</b></h1>
                     <div>
                         <form>
                             <table>
@@ -198,7 +234,7 @@ class AdminRegister extends Component {
                             <div>
                                 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <Button variant="contained" color="success" type="submit" onClick={this.addAdmin}>Register</Button>&nbsp;&nbsp;&nbsp;
-                                    <Button variant="contained" type="reset">Reset</Button>
+                                    <Button variant="contained" type="submit" onClick={this.resetState}>Reset</Button>
                                 </p>
                             </div>
                         </form>

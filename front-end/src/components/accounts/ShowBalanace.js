@@ -1,8 +1,10 @@
-import { Box } from '@material-ui/core';
+import balanceCheck from '../../images/SBM-Balance-Check.png';
 import React, { Component } from 'react';
 import { FaRupeeSign } from 'react-icons/fa';
 import AccountApis from './AccountApis';
+import { Paper, TextField } from "@mui/material";
 
+const paperStyle={padding:'35px 20px', width:700,height:460,margin:"30px auto"}
 class ShowBalanace extends Component {
     constructor(props) {
         super(props)
@@ -29,42 +31,32 @@ class ShowBalanace extends Component {
         });
     }
     render() {
+        const textStyle = {color:'purple'}
+        const logoStyle = {height:55, padding:'12px 0px'}
+        const imageStyle = {height:260, width: 380}
         return (
-            <div className="display-balance">
+            <Paper elevation={3} style={paperStyle}>
                 <form id="form" action="#" method="GET" >
-                <h2>Balance Details:</h2>
-                <Box className="transaction-inner-box" bgcolor="lightgray" p={1} >
-                            <div class="leftcontact-test">
-                                <div>
-                                    <label><b> Account Number : </b> {this.state.accountNumber} </label> <br /> <br />
-                                    <label><b> Account Holder Name : </b>{this.state.accountHolderName} </label> <br /> <br />
-                                    <label><b> Branch : </b>{this.state.branchName} </label> <br /> <br />
-                                    <label><b> Bank Name : </b>{this.state.bankName} </label> <br /> <br />
-                                    <label><b> IFSC Code : </b>{this.state.ifscCode} </label> <br /> <br />
-                                    <label><b>Available Balance(Rs) : </b> </label>
-                                    <div class="form-group">
-                                    <input type="text" name="balance" placeholder="amount" value={this.state.balance.toFixed(2)} />
-                                    <span class="icon-case"><FaRupeeSign sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></span>
-                                    
-                                    </div>
-                                    {/* </label> */}
+                    <h4><b style={textStyle}>Account Details</b></h4> <br />
+                                <div className="showbalanceImage" flex>
+                                    <img style={imageStyle} src={balanceCheck} alt="Not Found" className="rounded" />
                                 </div>
-                            </div>
-                        </Box>
-
-
-
-                    {/* <fieldset>
-                        <h1>Balance Details </h1>
-                        <div id="otherFields">
-                            <p> Account Number : {this.state.accountNumber}</p>
-                            <p> Account Holder Name : {this.state.firstName} {this.state.lastName}</p>
-                            <p> Bank Name : {this.state.bankName}</p>
-                            <p> Available Balance : {this.state.balance}</p>
-                        </div>
-                    </fieldset> */}
+                                <div>
+                                    <label><b style={textStyle}> Account Number : </b> {this.state.accountNumber} </label> <br /> <br />
+                                    <label><b style={textStyle}> Account Holder Name : </b>{this.state.accountHolderName} </label> <br /> <br />
+                                    <label><b style={textStyle}> Branch : </b>{this.state.branchName} </label> <br /> <br />
+                                    <label><b style={textStyle}> Bank Name : </b>{this.state.bankName} </label> <br /> <br />
+                                    <label><b style={textStyle}> IFSC Code : </b>{this.state.ifscCode} </label> <br /> <br />
+                                    <label><b style={textStyle}>Available Balance(Rs) : </b> </label>
+                                    <div class="form-group"><br />
+                                        <TextField type="text" name="balance" placeholder="amount" value={this.state.balance.toFixed(1)} />
+                                        <span style={logoStyle} class="icon-case"><FaRupeeSign sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></span>
+                                    </div>
+                                    
+                                </div>
+                                
                 </form>
-            </div>
+            </Paper>
         );
     }
 }
