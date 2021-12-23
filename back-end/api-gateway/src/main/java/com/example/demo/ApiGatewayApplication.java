@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-//@CrossOrigin(origins = "http://localhost:8080")
 public class ApiGatewayApplication {
 
 	public static void main(String[] args) {
