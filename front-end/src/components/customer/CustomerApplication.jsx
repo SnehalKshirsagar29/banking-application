@@ -20,10 +20,8 @@ export default function CustomerApplication() {
     const [phone, setPhone] = useState('')
     const [status, setStatus] = useState('NEW')
     const handelCancel = () => {
-        // setCustomerId("");
         setemailAdress("");
         setPhone("");
-        // setStatus("");
         setMessage("");
     }
     const handleClick = (e) => {
@@ -34,7 +32,7 @@ export default function CustomerApplication() {
         setStatusError("");
         const CustomerApplication = {customerId, emailAddress, message, phone, status };
         if (valid()) {
-            return axios.post('http://localhost:4040/api/ticket/customer/' + CustomerApplication.customerId, CustomerApplication)
+            return axios.post('http://localhost:8080/api/customer-service/ticket/customer/' + CustomerApplication.customerId, CustomerApplication)
                 .then(response => {
                     toast.dark("Your ticket is Generated 👋, for Customer Id:" + CustomerApplication.customerId);
                     // setCustomerId("");

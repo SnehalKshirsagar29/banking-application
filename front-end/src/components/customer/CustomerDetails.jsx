@@ -10,7 +10,7 @@ class CustomerDetails extends Component{
         super(props)
         let loginuser = JSON.parse(localStorage.getItem("user"));
         this.state = {
-            customers:[],
+        customers:[],
         customerId:loginuser.accountNumber 
         }
         this.onChange=this.onChange.bind(this);        
@@ -22,14 +22,13 @@ class CustomerDetails extends Component{
     }
     componentDidMount(){
         console.log('customerId se'+this.state.customerId);
-        axios.get('http://localhost:4040/api/customer/'+this.state.customerId).then((response)=> {
+        axios.get('http://localhost:8080/api/customer-service/customer/'+this.state.customerId).then((response)=> {
                 this.setState({customers: response.data });
                 toast.dark("Your Customer Details 👋, for this customer Id:" +this.state.customerId);
             });
     }
 render() {
     return(
-        
          <div className="customer-summary">
               <ToastContainer />
                 <h2>Customer Details</h2>
@@ -49,7 +48,7 @@ render() {
                             this.state.customers.map(
                                 customer =>
                                     <tr key={customer.id}>
-                                         <td>{customer.customerId}</td>
+                                         <td>{this.state.customerId}</td>
                                          <td>{customer.id}</td>
                                         <td>{customer.emailAddress}</td>
                                         <td>{customer.message} </td>

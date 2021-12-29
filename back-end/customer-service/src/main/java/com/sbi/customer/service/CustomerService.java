@@ -20,22 +20,29 @@ public class CustomerService {
 
 	public Customer addCustomerTicket(CustomerTicketReq customerTicketreq) {
 		Customer c1 = new Customer();
-		c1.setCustomerId(customerTicketreq.getId());
+		c1.setCustomerId(customerTicketreq.getCustomerId());
 		c1.setPhone(customerTicketreq.getPhone());
 		c1.setMessage(customerTicketreq.getMessage());
 		c1.setStatus(customerTicketreq.getStatus());
 		c1.setEmailAddress(customerTicketreq.getEmailAddress());
 		return (Customer) this.repository.save(c1);
 	}
-
+	
+	
+	public int updatecustomerStatus(Long id, String  status) {	
+		return this.repository.updateCustomerTicket(id,status);
+	}
+	
 	public List<Customer> findByCustomerId(Long CustomerId) {
 		return repository.findAllByCustomerId(CustomerId);
 	}
+	
+	public List<Customer> getAllCustomer() {
+		return repository.findAll();
+	}
 
-	  public Optional<Customer> findByUserticketId(Long id) {
-	        return repository.findById(id);
-	    }
+	public Optional<Customer> findByUserticketId(Long id) {
+		return repository.findById(id);
+	}
 
-	  
-	 
 }

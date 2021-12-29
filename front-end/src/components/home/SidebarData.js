@@ -120,6 +120,20 @@ export const SidebarDataAdmin = [
         ]
     },
     {
+        title: 'Customer',
+        path: '#',
+        icon: <FaIcons.FaUser />,
+        iconClosed : <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        subNav: [
+            {
+                title: 'Show Ticket Details',
+                path: '/customer/ticketdetails',
+                icon: <IoIcons.IoIosPaper />
+            }
+        ]
+    },
+    {
         title: 'Users',
         path: '/users',
         icon: <FaIcons.FaUsers />
