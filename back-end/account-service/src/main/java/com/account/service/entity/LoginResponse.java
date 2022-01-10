@@ -7,15 +7,17 @@ public class LoginResponse {
 	private String lastName;
 	private String msg;
 	private String roleName;
+	private String authenticationToken;
 	
 	public LoginResponse(String username, Long accountNumber, 
-			String firstName, String lastName, String msg, String roleName) {
+			String firstName, String lastName, String msg, String roleName, String authenticationToken) {
 		this.username = username;
 		this.accountNumber = accountNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.msg = msg;
 		this.roleName = roleName;
+		this.authenticationToken = authenticationToken;
 	}
 	public String getUsername() {
 		return username;
@@ -52,5 +54,11 @@ public class LoginResponse {
 	}
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	public String getAuthenticationToken() {
+		return authenticationToken;
+	}
+	public void setAuthenticationToken(String authenticationToken) {
+		this.authenticationToken = authenticationToken;
 	}
 }

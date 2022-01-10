@@ -67,7 +67,7 @@ export default class BankUsers extends Component {
     let isAdmin = loggedInUser.roleName === "Super Admin" ? true : false;
     return (
       <div className="admin-users">
-        <h2><b>Add Admin </b>
+        <h2><b>Users </b>
           {
             isAdmin && <Link to="/admins/add" ><PlusCircleFill color='green' /> </Link>
           }

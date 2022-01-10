@@ -9,11 +9,11 @@ export const LogoutData = [
     path: '/login',
     icon: <AiIcons.AiOutlineLogout />
 },
-// {
-//     title:'Setting',
-//     path: '/setting',
-//     icon: <AiIcons.AiFillSetting />
-// }
+{
+    title:'Setting',
+    path: '/setting',
+    icon: <AiIcons.AiFillSetting />
+}
 ]
 
 

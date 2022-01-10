@@ -139,12 +139,14 @@ class TransactionSummary extends Component {
                 }
               </tbody>
             </table>
+            {/* {currPage.totalPages > 1 && */}
             <div class="pagination-buttons">
               <button type="button" class="btn btn-primary" onClick={this.previousPage}
                 disabled={currPage.currentPage <= 1} >Previous</button> &nbsp; &nbsp;
               <button type="button" class="btn btn-primary" onClick={this.nextPage}
                 disabled={currPage.totalPages === 0 || currPage.totalPages === currPage.currentPage} >Next</button>
             </div>
+            {/* } */}
           </ul>
         }
       </div>

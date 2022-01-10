@@ -9,7 +9,7 @@ import { MenuItem, Paper, Select } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {AccountBalanceWalletRounded, 
-        AppRegistrationOutlined, CodeOffRounded, MarkEmailReadRounded, MobiledataOffOutlined,
+        AppRegistrationOutlined, ArrowBack, CodeOffRounded, MarkEmailReadRounded, MobiledataOffOutlined,
         PasswordOutlined} from "@mui/icons-material";
 import AccountApis from "../accounts/AccountApis";
 import { toast } from 'react-toastify';
@@ -17,7 +17,7 @@ import ReactDOM from 'react-dom';
 import App from "../../App";
 toast.configure();
 const CreateAccRegistrationForm = () => {
-    const paperStyle = { padding: '50px 20px', width: 800, margin: "10px auto" }
+    const paperStyle = { padding: '10px 20px', width: 800, margin: "10px auto" }
 
     const [userRegistration, setUserRegistration] = useState({
         firstName: "",
@@ -87,9 +87,19 @@ const CreateAccRegistrationForm = () => {
         })
     }
 
+    const backToLogin = () => {
+        console.log("backToLogin...");
+        //window.location.assign('/register');
+        ReactDOM.render(
+            <App />,
+            document.getElementById('root')
+       );
+    }
+
     return (
         <Container>
             <Paper elevation={3} style={paperStyle}>
+            <Button onClick = {backToLogin} block><ArrowBack /></Button>
                 <h1>Create Your Account With State Bank Of Mysore</h1>
                 <div>
                     <form action="" onSubmit={handelSubmit}>

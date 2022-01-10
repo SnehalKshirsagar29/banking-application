@@ -19,6 +19,8 @@ class ShowBalanace extends Component {
         }
     }
     componentDidMount() {
+        // console.log("componentDidMount : accountNumber : "+this.state.accountNumber)
+        // AccountApis.getAccountById(this.state.accountNumber);
         AccountApis.getAccountById(this.state.accountNumber).then((response) => {
             this.setState({ 
                 accountNumber: response.data.accountNumber,
@@ -28,7 +30,9 @@ class ShowBalanace extends Component {
                 balance: response.data.balance,
                 ifscCode: response.data.ifscCode
              });
-        });
+        }).catch((error) => {
+            console.log("error :" + error.response.data);
+        });;
     }
     render() {
         const textStyle = {color:'purple'}
@@ -49,7 +53,7 @@ class ShowBalanace extends Component {
                                     <label><b style={textStyle}> IFSC Code : </b>{this.state.ifscCode} </label> <br /> <br />
                                     <label><b style={textStyle}>Available Balance(Rs) : </b> </label>
                                     <div class="form-group"><br />
-                                        <TextField type="text" name="balance" placeholder="amount" value={this.state.balance.toFixed(1)} />
+                                        <TextField type="text" name="balance" placeholder="amount" value={this.state.balance.toFixed(1)} />{/* .toFixed(1) */}
                                         <span style={logoStyle} class="icon-case"><FaRupeeSign sx={{ color: 'action.active', mr: 1, my: 0.5 }} /></span>
                                     </div>
                                     

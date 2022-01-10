@@ -65,6 +65,36 @@ class AdminRegister extends Component {
         this.setState({ admin });
     }
 
+    onChangeAge = (e) => {
+        const regex = /^[+]?\d+([.]\d+)?$/;// /^[0-9\b]+$/;
+        console.log("onchangeNumber : outsideIf : name : "+e.target.name+" : value : "+e.target.value)
+        if (e.target.value === '' || (regex.test(e.target.value) && e.target.value <= 90 && e.target.value > 0)) {
+            // console.log("onchangeNumber : insideIf : name : "+e.target.name+" : value : "+e.target.value)
+            // if(e.target.value === '' || e.target.name === 'age' && e.target.value <= 90 && e.target.value > 0) {
+                console.log("onchangeNumber : insideIf : name : "+e.target.name+" : value : "+e.target.value)
+                const admin = {...this.state.admin};
+                      admin[e.target.name] = e.target.value;
+                this.setState({ admin });
+                //  this.setState({ [e.target.name]: e.target.value })
+            // }
+        }
+    }
+
+    onChangeMobileNumber = (e) => {
+        // const regex = /^[+]?\d+([.]\d+)?$/;// /^[0-9\b]+$/;
+        console.log("onChangeMobileNumber : outsideIf : name : "+e.target.name+" : value : "+e.target.value)
+        if (e.target.value === '' || (e.target.value > 0 && e.target.value)) {
+            // console.log("onChangeMobileNumber : insideIf : name : "+e.target.name+" : value : "+e.target.value)
+            // if(e.target.value === '' || e.target.name === 'age' && e.target.value <= 90 && e.target.value > 0) {
+                console.log("onChangeMobileNumber : insideIf : name : "+e.target.name+" : value : "+e.target.value)
+                const admin = {...this.state.admin};
+                      admin[e.target.name] = e.target.value;
+                this.setState({ admin });
+                //  this.setState({ [e.target.name]: e.target.value })
+            // }
+        }
+    }
+
     addAdmin = (e) => {
         e.preventDefault()
         console.log("Register admin state : "+JSON.stringify(this.state.admin));
@@ -74,7 +104,7 @@ class AdminRegister extends Component {
                  admin : {}
                });
                  console.log("user : "+user);
-                 toast.success(user.firstName+' '+user.lastName+ ' is added successfully as '+user.roleName, {
+                 toast.success(user.firstName+' '+user.lastName+ ' is added successfully as '+user.roleName+' of SBM', {
                      position: "top-right",
                      pauseOnHover: true,
                      draggable: false,
@@ -83,7 +113,7 @@ class AdminRegister extends Component {
                  });
              }).catch((error) => {
                console.log('Add admin user failed! due to ' + JSON.stringify(error.response));
-                 toast.error('Add new admin failed! due to ' + error.response.data.msg, {
+                 toast.error(error.response.data.message, {
                      position: "top-right",
                      pauseOnHover: true,
                      draggable: false,
@@ -172,20 +202,20 @@ class AdminRegister extends Component {
                                     <td>
                                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                             <ContactPhone sx={{ color: 'action.active', mr: 1, my: 2 }} />
-                                            <TextField required id="outlined-required" label="Contact Number" type="text"
+                                            <TextField required id="outlined-required" label="Contact Number" type="number"
                                             name="contactNumber"
                                             value={this.state.admin.contactNumber}
-                                            onChange={this.onChange}
+                                            onChange={this.onChangeMobileNumber}
                                             />
                                         </Box>
                                     </td>&nbsp;
                                     <td>
                                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                             <Group sx={{ color: 'action.active', mr: 1, my: 2 }} />
-                                            <TextField required id="outlined-required" label="Age" type="text"
+                                            <TextField  required id="outlined-required" label="Age" type="number"
                                             name="age"
                                             value={this.state.admin.age}
-                                            onChange={this.onChange}
+                                            onChange={this.onChangeAge}
                                             />
                                         </Box>
                                     </td>

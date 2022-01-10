@@ -150,7 +150,13 @@ public class AccountController {
 	}
 	
 	@PostMapping(path = "/add-admin-user")
-	public ResponseEntity<User> addAdminUser(@RequestBody User user) {
+	public ResponseEntity<Object> addAdminUser(@RequestBody User user) {
+		User oldUser = this.loginService.getUserByEmailId(user.getEmailId());
+		if(oldUser !=  null) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("message", "User already exist with emailId : "+user.getEmailId());
+			return ResponseEntity.badRequest().body(map);
+		}
 		User response = this.loginService.createAdminUser(user);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
@@ -168,5 +174,10 @@ public class AccountController {
 	@GetMapping(path = "/get-users-by-role/{role}")
 	public List<User> getUsersByRole(@PathVariable String role) {
 		return this.loginService.getUsersOfRole(role);
+	}
+	
+	@GetMapping(path = "/get-users-by-emailId/{emailId}")
+	public User getUserByEmailId(String emailId) {
+		return this.loginService.getUserByEmailId(emailId);
 	}
 }

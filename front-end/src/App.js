@@ -26,7 +26,7 @@ import BankAccounts from './components/accounts/BankAccounts';
 function App(props) {
    let isRegister = props.isRegister;
    let loggedInUser = JSON.parse(localStorage.getItem('user'));
-     if (loggedInUser != null && Object.keys(loggedInUser).length > 0) {
+   if (loggedInUser != null && Object.keys(loggedInUser).length > 0) {
        return (
        <BrowserRouter>
            <Sidebar />
@@ -66,12 +66,14 @@ function App(props) {
        </BrowserRouter>
        );
      } else if(isRegister) {
-        console.log("window.location register : "+window.location);
          return <CreateAccRegistrationForm />;
      }  else if(loggedInUser === null || Object.keys(loggedInUser).length === 0){
          console.log("window.location login: "+window.location);
-         return <LoginForm />;
-      }
+         if(window.location == "http://localhost:3000/")
+           return <LoginForm />;
+         else 
+          return null;
+    }
 }
 
 export default App;
